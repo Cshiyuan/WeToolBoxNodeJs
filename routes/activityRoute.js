@@ -54,8 +54,34 @@ router.use('/getActivity', function (req, res, next) {
     let activity_id = req.body.activity_id || 'ads';
     activityDao.getActivity({activity_id: activity_id}).then(result => {
 
-        console.log(result);
+        // console.log(result);
 
+
+        let getActivityPunchListPromise = activityDao.getActivityPunchList({
+            activity_id: result.activity_id,
+        });
+        let getActivitySignUpListPromise = activityDao.getActivitySignUpList(({
+            activity_id: result.activity_id
+        }));
+
+        return Promise.all([getActivityPunchListPromise, getActivitySignUpListPromise, Promise.resolve(result)]);
+
+    }).then(results => {
+        let punchList = results[0];
+        let signUpList = results[1];
+        let result = results[2];
+
+        let activity = result;
+        activity.punchList = punchList;
+        activity.signUpList = signUpList;
+
+        res.json({activity: activity, result: result});
+
+
+    }).catch(err => {
+
+        console.log('catch err is ' + err);
+        res.json(err);
     });
 });
 
@@ -69,8 +95,11 @@ router.use('/getUserActivityList', function (req, res, next) {
 
         console.log(result);
 
+    }).catch(err => {
+
+        console.log('catch err is ' + err);
+        res.json(err);
     });
-    res.send('respond with a resource');
 });
 
 
@@ -84,8 +113,11 @@ router.use('/getUserSignUpActivity', function (req, res, next) {
 
         console.log(result);
 
+    }).catch(err => {
+
+        console.log('catch err is ' + err);
+        res.json(err);
     });
-    res.send('respond with a resource');
 });
 
 // getUserSignUpActivity
@@ -100,8 +132,11 @@ router.use('/deleteActivity', function (req, res, next) {
 
         console.log(result);
 
+    }).catch(err => {
+
+        console.log('catch err is ' + err);
+        res.json(err);
     });
-    res.send('respond with a resource');
 });
 
 /**
@@ -121,8 +156,11 @@ router.use('/signUpActivity', function (req, res, next) {
 
         console.log(result);
 
+    }).catch(err => {
+
+        console.log('catch err is ' + err);
+        res.json(err);
     });
-    res.send('respond with a resource');
 });
 
 /**
@@ -142,8 +180,11 @@ router.use('/punchActivity', function (req, res, next) {
 
         console.log(result);
 
+    }).catch(err => {
+
+        console.log('catch err is ' + err);
+        res.json(err);
     });
-    res.send('respond with a resource');
 });
 
 
@@ -160,8 +201,11 @@ router.use('/getActivityPunchList', function (req, res, next) {
 
         console.log(result);
 
+    }).catch(err => {
+
+        console.log('catch err is ' + err);
+        res.json(err);
     });
-    res.send('respond with a resource');
 });
 
 /**
@@ -177,8 +221,11 @@ router.use('/getActivitySignUpList', function (req, res, next) {
 
         console.log(result);
 
+    }).catch(err => {
+
+        console.log('catch err is ' + err);
+        res.json(err);
     });
-    res.send('respond with a resource');
 });
 
 
