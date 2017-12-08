@@ -4,6 +4,7 @@
 const express = require('express');
 const router = express.Router();
 const activityDao = require('../dao/activityDao');
+const userDao = require('../dao/userDao');
 
 /**
  * 添加活动
@@ -18,6 +19,28 @@ router.use('/insertActivity', function (req, res, next) {
     let position = req.body.position || ''; //活动位置
     let time = req.body.time || '';  //活动时间
     let date = req.body.date || '';  //活动日期
+
+    let session = req.session || {};
+    console.log(session);
+
+    const getUserBySession = (session => {
+        return {
+            open_id: session.userInfo.openId || '',
+            nick_name: session.userInfo.nickName || '',
+            gender: session.userInfo.gender || 1,
+            language: session.userInfo.language || 0,
+            city: session.userInfo.city || '',
+            province: session.userInfo.province || '',
+            country: session.userInfo.country || '',
+            avatar_url: session.userInfo.avatarUrl || ''
+        }
+    });
+
+    userDao.insertUser({
+        user :getUserBySession(session)
+    }).then(result => {
+
+    });
 
 
     let activity_id = 'AC' + open_id + type.toString() + (new Date()).valueOf();  //逻辑id

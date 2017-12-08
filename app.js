@@ -14,16 +14,16 @@ var app = express();
 
 const session = require('wafer-node-session');
 const sessionStore = require('./dao/sessionStore');
+
+
 app.use(session({
+
     // 小程序 appId
     appId: 'wx4097cfe13dfa3a6c',
-
     // 小程序 appSecret
     appSecret: 'd195ea01fa7d3b5892c5aea58565d808',
-
     // 登录地址
     loginPath: '/login',
-
     // 会话存储
     store: sessionStore
 }));
