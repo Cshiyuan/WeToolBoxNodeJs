@@ -4,14 +4,18 @@
 const express = require('express');
 const router = express.Router();
 const activityDao = require('../dao/activityDao');
-const userDao = require('../dao/userDao');
+
 
 /**
  * 添加活动
  */
 router.use('/insertActivity', function (req, res, next) {
 
-    let open_id = req.body.open_id || 'asd';  //用户的open_id
+
+    let session = req.session || {};
+    let open_id = session.userInfo.openId || '';  //用户的open_id
+
+
     let type = req.body.type || 0;  //活动类型
     let title = req.body.title || 'asdasd';  //活动标题
     let description = req.body.description || 'asdasdew';  //活动描述
@@ -20,31 +24,7 @@ router.use('/insertActivity', function (req, res, next) {
     let time = req.body.time || '';  //活动时间
     let date = req.body.date || '';  //活动日期
 
-    let session = req.session || {};
-    console.log(session);
-
-    const getUserBySession = (session => {
-        return {
-            open_id: session.userInfo.openId || '',
-            nick_name: session.userInfo.nickName || '',
-            gender: session.userInfo.gender || 1,
-            language: session.userInfo.language || 0,
-            city: session.userInfo.city || '',
-            province: session.userInfo.province || '',
-            country: session.userInfo.country || '',
-            avatar_url: session.userInfo.avatarUrl || ''
-        }
-    });
-
-    userDao.insertUser({
-        user :getUserBySession(session)
-    }).then(result => {
-
-    });
-
-
     let activity_id = 'AC' + open_id + type.toString() + (new Date()).valueOf();  //逻辑id
-
     console.log('activityId is ' + activity_id);
 
     activity = {
@@ -76,8 +56,6 @@ router.use('/getActivity', function (req, res, next) {
 
     let activity_id = req.body.activity_id || 'ads';
     activityDao.getActivity({activity_id: activity_id}).then(result => {
-
-        // console.log(result);
 
 
         let getActivityPunchListPromise = activityDao.getActivityPunchList({
@@ -113,7 +91,9 @@ router.use('/getActivity', function (req, res, next) {
  */
 router.use('/getUserActivityList', function (req, res, next) {
 
-    let open_id = req.body.open_id || 'ads';
+    let session = req.session || {};
+    let open_id = session.userInfo.openId || '';  //用户的open_id
+
     activityDao.getUserActivityList({open_id: open_id}).then(result => {
 
         console.log(result);
@@ -131,7 +111,9 @@ router.use('/getUserActivityList', function (req, res, next) {
  */
 router.use('/getUserSignUpActivity', function (req, res, next) {
 
-    let open_id = req.body.open_id || 'ads';
+    let session = req.session || {};
+    let open_id = session.userInfo.openId || '';  //用户的open_id
+
     activityDao.getUserSignUpActivity({open_id: open_id}).then(result => {
 
         console.log(result);
@@ -167,8 +149,10 @@ router.use('/deleteActivity', function (req, res, next) {
  */
 router.use('/signUpActivity', function (req, res, next) {
 
-    let activity_id = req.body.activity_id || 'ads';
-    let open_id = req.body.open_id || 'asdasd';
+    let session = req.session || {};
+    let open_id = session.userInfo.openId || '';  //用户的open_id
+
+    let activity_id = req.body.activity_id || '';
     let extra = req.body.extra || '';
 
     activityDao.signUpActivity({
@@ -191,8 +175,10 @@ router.use('/signUpActivity', function (req, res, next) {
  */
 router.use('/punchActivity', function (req, res, next) {
 
-    let activity_id = req.body.activity_id || 'ads';
-    let open_id = req.body.open_id || 'asdasd';
+    let session = req.session || {};
+    let open_id = session.userInfo.openId || '';  //用户的open_id
+
+    let activity_id = req.body.activity_id || '';
     let extra = req.body.extra || '';
 
     activityDao.punchActivity({

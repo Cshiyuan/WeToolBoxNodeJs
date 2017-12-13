@@ -204,7 +204,7 @@ function getActivitySignUpList(object) {
         pool.getConnection(function (err, connection) {
 
             connection.query('SELECT * FROM wb_activity_user_signup_relation'
-                + 'INNER JOIN user ON wb_activity_user_signup_relation.open_id = user.open_id',
+                + ' INNER JOIN wb_user ON wb_activity_user_signup_relation.open_id = wb_user.open_id',
                 object.activity_id, function (error, results, fields) {
 
                     if (error) {
@@ -234,7 +234,7 @@ function getActivityPunchList(object) {
         pool.getConnection(function (err, connection) {
 
             connection.query('SELECT * FROM wb_activity_user_punch_relation'
-                + ' INNER JOIN user ON wb_activity_user_punch_relation.open_id = user.open_id',
+                + ' INNER JOIN wb_user ON wb_activity_user_punch_relation.open_id = wb_user.open_id',
                 object.activity_id, function (error, results, fields) {
 
                     if (error) {
@@ -266,7 +266,7 @@ function getUserSignUpActivity(object) {
         pool.getConnection(function (err, connection) {
 
             connection.query('SELECT * FROM wb_activity_user_signup_relation'
-                + ' INNER JOIN user ON user.open_id = wb_activity_user_signup_relation.open_id',
+                + ' INNER JOIN wb_user ON wb_user.open_id = wb_activity_user_signup_relation.open_id',
                 object.open_id, function (error, results, fields) {
 
                     if (error) {
