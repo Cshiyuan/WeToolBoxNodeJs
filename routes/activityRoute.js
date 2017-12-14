@@ -54,9 +54,11 @@ router.use('/insertActivity', function (req, res, next) {
  */
 router.use('/getActivity', function (req, res, next) {
 
-    let activity_id = req.body.activity_id || 'ads';
-    activityDao.getActivity({activity_id: activity_id}).then(result => {
+    let activity_id = req.body.activity_id || '';
+    let session = req.session || {};
+    let open_id = session.userInfo.openId || '';  //用户的open_id
 
+    activityDao.getActivity({activity_id: activity_id}).then(result => {
 
         let getActivityPunchListPromise = activityDao.getActivityPunchList({
             activity_id: result.activity_id,
@@ -64,10 +66,10 @@ router.use('/getActivity', function (req, res, next) {
         let getActivitySignUpListPromise = activityDao.getActivitySignUpList(({
             activity_id: result.activity_id
         }));
-
         return Promise.all([getActivityPunchListPromise, getActivitySignUpListPromise, Promise.resolve(result)]);
 
     }).then(results => {
+
         let punchList = results[0];
         let signUpList = results[1];
         let result = results[2];
@@ -76,8 +78,25 @@ router.use('/getActivity', function (req, res, next) {
         activity.punchList = punchList;
         activity.signUpList = signUpList;
 
-        res.json({activity: activity, result: result});
+        let isSignUp = false;
+        let isPunch = false;
 
+        punchList.forEach((item) => {
+            if(item.open_id === open_id) {
+                isPunch = true;
+            }
+        });
+
+        signUpList.forEach((item) => {
+            if(item.open_id === open_id) {
+                isSignUp = true;
+            }
+        });
+
+        activity.isSignUp = isSignUp;
+        activity.isPunch = isPunch;
+
+        res.json({activity: activity, result: result});
 
     }).catch(err => {
 
@@ -125,8 +144,6 @@ router.use('/getUserSignUpActivity', function (req, res, next) {
     });
 });
 
-// getUserSignUpActivity
-
 /**
  * 删除活动
  */
@@ -162,7 +179,13 @@ router.use('/signUpActivity', function (req, res, next) {
     }).then(result => {
 
         console.log(result);
+        return activityDao.getActivitySignUpList({
+            activity_id: activity_id
+        });
 
+    }).then(result => {
+
+        res.json(result);
     }).catch(err => {
 
         console.log('catch err is ' + err);
@@ -188,7 +211,13 @@ router.use('/punchActivity', function (req, res, next) {
     }).then(result => {
 
         console.log(result);
+        return activityDao.getActivityPunchList({
+            activity_id: activity_id
+        });
 
+    }).then(result => {
+
+        res.json(result);
     }).catch(err => {
 
         console.log('catch err is ' + err);
@@ -202,7 +231,7 @@ router.use('/punchActivity', function (req, res, next) {
  */
 router.use('/getActivityPunchList', function (req, res, next) {
 
-    let activity_id = req.body.activity_id || 'ads';
+    let activity_id = req.body.activity_id || '';
 
     activityDao.getActivityPunchList({
         activity_id: activity_id,
@@ -222,7 +251,7 @@ router.use('/getActivityPunchList', function (req, res, next) {
  */
 router.use('/getActivitySignUpList', function (req, res, next) {
 
-    let activity_id = req.body.activity_id || 'ads';
+    let activity_id = req.body.activity_id || '';
 
     activityDao.getActivitySignUpList({
         activity_id: activity_id,
