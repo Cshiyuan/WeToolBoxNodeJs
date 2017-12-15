@@ -116,6 +116,7 @@ router.use('/getUserActivityList', function (req, res, next) {
     activityDao.getUserActivityList({open_id: open_id}).then(result => {
 
         console.log(result);
+        res.json(result);
 
     }).catch(err => {
 
@@ -136,6 +137,7 @@ router.use('/getUserSignUpActivity', function (req, res, next) {
     activityDao.getUserSignUpActivity({open_id: open_id}).then(result => {
 
         console.log(result);
+        res.json(result);
 
     }).catch(err => {
 
@@ -153,6 +155,7 @@ router.use('/deleteActivity', function (req, res, next) {
     activityDao.deleteActivity({activity_id: activity_id}).then(result => {
 
         console.log(result);
+        res.json(result);
 
     }).catch(err => {
 
@@ -238,6 +241,7 @@ router.use('/getActivityPunchList', function (req, res, next) {
     }).then(result => {
 
         console.log(result);
+        res.json(result);
 
     }).catch(err => {
 
