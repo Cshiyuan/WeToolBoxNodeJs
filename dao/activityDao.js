@@ -92,7 +92,12 @@ function deleteActivity(object) {
 
         pool.getConnection(function (err, connection) {
 
-            connection.query('DELETE FROM wb_activity WHERE activity_id = ?',
+            let mysql = 'delete a.*, s.*, p.* from wb_activity as a, wb_activity_user_signup_relation as s,' +
+                ' wb_activity_user_punch_relation as p' +
+                ' where a.activity_id = wb_activity_user_signup_relation.activity_id' +
+                ' and a.activity_id = wb_activity_user_punch_relation.activity_id and a.activity_id = ?';
+
+            connection.query(mysql,
                 object.activity_id, function (error, results, fields) {
 
                     if (error) {
@@ -259,6 +264,9 @@ function getUserSignUpActivity(object) {
 
     return new Promise(function (resolve, reject) {
 
+
+        let start = object.start || 0;
+        let length = object.length || 10;
         if (!object.open_id) {
             reject('param is err!');
         }
@@ -266,8 +274,9 @@ function getUserSignUpActivity(object) {
         pool.getConnection(function (err, connection) {
 
             connection.query('SELECT * FROM wb_activity_user_signup_relation'
-                + ' INNER JOIN wb_user ON wb_user.open_id = wb_activity_user_signup_relation.open_id',
-                object.open_id, function (error, results, fields) {
+                + ' INNER JOIN wb_activity ON wb_activity.activity_id = wb_activity_user_signup_relation.activity_id AND wb_activity_user_signup_relation.open_id = ?' +
+                ' ORDER BY wb_activity_user_signup_relation.create_time desc, wb_activity.activity_id limit ?, ?',
+                [object.open_id, start, length], function (error, results, fields) {
 
                     if (error) {
                         reject(error);
@@ -293,14 +302,18 @@ function getUserActivityList(object) {
 
     return new Promise(function (resolve, reject) {
 
+        let start = object.start || 0;
+        let length = object.length || 10;
+
         if (!object.open_id) {
             reject('param is err!');
         }
 
         pool.getConnection(function (err, connection) {
 
-            connection.query('SELECT * FROM wb_activity WHERE open_id = ?',
-                object.open_id, function (error, results, fields) {
+            connection.query('SELECT * FROM wb_activity WHERE open_id = ? ORDER BY create_time desc, activity_id limit ?, ?',
+                [object.open_id, start, length],
+                function (error, results, fields) {
 
                     if (error) {
                         reject(error);
@@ -308,13 +321,12 @@ function getUserActivityList(object) {
                     connection.release();
                     resolve(results);
                 }
-            );
+            )
+            ;
 
         });
     });
 }
-
-
 
 
 module.exports = {

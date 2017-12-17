@@ -112,8 +112,14 @@ router.use('/getUserActivityList', function (req, res, next) {
 
     let session = req.session || {};
     let open_id = session.userInfo.openId || '';  //用户的open_id
+    let start = req.body.start || 0;
+    let length = req.body.length || 10;
 
-    activityDao.getUserActivityList({open_id: open_id}).then(result => {
+    activityDao.getUserActivityList({
+        open_id: open_id,
+        start: start,
+        length: length
+    }).then(result => {
 
         console.log(result);
         res.json(result);
@@ -151,7 +157,7 @@ router.use('/getUserSignUpActivity', function (req, res, next) {
  */
 router.use('/deleteActivity', function (req, res, next) {
 
-    let activity_id = req.body.activity_id || 'ads';
+    let activity_id = req.body.activity_id || '';
     activityDao.deleteActivity({activity_id: activity_id}).then(result => {
 
         console.log(result);
