@@ -92,13 +92,80 @@ function deleteActivity(object) {
 
         pool.getConnection(function (err, connection) {
 
-            let mysql = 'delete a.*, s.*, p.* from wb_activity as a, wb_activity_user_signup_relation as s,' +
-                ' wb_activity_user_punch_relation as p' +
-                ' where a.activity_id = wb_activity_user_signup_relation.activity_id' +
-                ' and a.activity_id = wb_activity_user_punch_relation.activity_id and a.activity_id = ?';
+            let mysql = 'DELETE FROM wb_activity WHERE activity_id = ?; ';
 
             connection.query(mysql,
-                object.activity_id, function (error, results, fields) {
+                [object.activity_id], function (error, results, fields) {
+
+                    if (error) {
+                        reject(error);
+                    }
+                    connection.release();
+                    resolve(results);
+                }
+            );
+
+        });
+    });
+}
+
+/**
+ * @description 删除活动报名关系表
+ * @param object
+ * {
+ *   activity_id: activity_id
+ * }
+ * @returns {Promise}
+ */
+function deleteSignUpRelation(object) {
+
+    return new Promise(function (resolve, reject) {
+
+        if (!object.activity_id) {
+            reject('param is err!');
+        }
+
+        pool.getConnection(function (err, connection) {
+
+            let mysql = 'DELETE FROM wb_activity_user_signup_relation WHERE activity_id = ?; ';
+
+            connection.query(mysql,
+                [object.activity_id], function (error, results, fields) {
+
+                    if (error) {
+                        reject(error);
+                    }
+                    connection.release();
+                    resolve(results);
+                }
+            );
+
+        });
+    });
+}
+
+/**
+ * @description 删除活动打卡关系表
+ * @param object
+ * {
+ *   activity_id: activity_id
+ * }
+ * @returns {Promise}
+ */
+function deletePunchRelation(object) {
+
+    return new Promise(function (resolve, reject) {
+
+        if (!object.activity_id) {
+            reject('param is err!');
+        }
+
+        pool.getConnection(function (err, connection) {
+
+            let mysql = 'DELETE FROM wb_activity_user_punch_relation WHERE activity_id = ?; ';
+
+            connection.query(mysql,
+                [object.activity_id], function (error, results, fields) {
 
                     if (error) {
                         reject(error);
@@ -334,6 +401,9 @@ module.exports = {
     insertActivity: insertActivity,
     getActivity: getActivity,
     deleteActivity: deleteActivity,
+    deleteSignUpRelation: deleteSignUpRelation,
+    deletePunchRelation: deletePunchRelation,
+
     signUpActivity: signUpActivity,
     punchActivity: punchActivity,
 

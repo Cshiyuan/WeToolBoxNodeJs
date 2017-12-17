@@ -158,7 +158,11 @@ router.use('/getUserSignUpActivity', function (req, res, next) {
 router.use('/deleteActivity', function (req, res, next) {
 
     let activity_id = req.body.activity_id || '';
-    activityDao.deleteActivity({activity_id: activity_id}).then(result => {
+    let deleteActivityPromise = activityDao.deleteActivity({activity_id: activity_id});
+    let deleteActivitySignUpRelationPromise = activityDao.deleteSignUpRelation(({activity_id: activity_id}));
+    let deleteActivityPunchRelationPromise = activityDao.deletePunchRelation(({activity_id: activity_id}));
+
+    Promise.all([deleteActivityPromise,deleteActivitySignUpRelationPromise,deleteActivityPunchRelationPromise]).then(result => {
 
         console.log(result);
         res.json(result);
