@@ -255,7 +255,7 @@ router.use('/punchActivity', function (req, res, next) {
         let type = result.type;
         if (type === 1) {  //说明创建者禁止了打卡
 
-            res.json({ret: '-1', message: '创建者禁止了打卡', data:{}});
+            res.json({ret: -1, message: '创建者禁止了打卡', data:{}});
             return Promise.resolve();
         } else {
 
@@ -271,7 +271,7 @@ router.use('/punchActivity', function (req, res, next) {
                 });
             }).then(result => {
 
-                res.json({ret: '0', message: 'success', data: result});
+                res.json({ret: 0, message: 'success', data: result});
             });
         }
 
