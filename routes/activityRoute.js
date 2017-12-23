@@ -82,21 +82,22 @@ router.use('/getActivity', function (req, res, next) {
         let isPunch = false;
 
         punchList.forEach((item) => {
-            if(item.open_id === open_id) {
+            if (item.open_id === open_id) {
                 isPunch = true;
             }
         });
 
         signUpList.forEach((item) => {
-            if(item.open_id === open_id) {
+            if (item.open_id === open_id) {
                 isSignUp = true;
             }
         });
 
         activity.isSignUp = isSignUp;
         activity.isPunch = isPunch;
+        let isOwner = activity.open_id === open_id;  //判断是否是创建者
 
-        res.json({activity: activity, result: result});
+        res.json({activity: activity, result: result, isOwner: isOwner});
 
     }).catch(err => {
 
@@ -104,6 +105,31 @@ router.use('/getActivity', function (req, res, next) {
         res.json(err);
     });
 });
+
+
+/**
+ * 改变活动
+ */
+router.use('/changeActivityType', function (req, res, next) {
+
+    let type = req.body.type || 0;
+    let activity_id = req.body.activity_id || '';
+
+    activityDao.changeActivityType({
+        type: type,
+        activity_id: activity_id
+    }).then(result => {
+
+
+        res.json({result: result});
+
+    }).catch(err => {
+
+        console.log('catch err is ' + err);
+        res.json(err);
+    });
+});
+
 
 /**
  * 获得一个用户的活动
@@ -140,7 +166,14 @@ router.use('/getUserSignUpActivity', function (req, res, next) {
     let session = req.session || {};
     let open_id = session.userInfo.openId || '';  //用户的open_id
 
-    activityDao.getUserSignUpActivity({open_id: open_id}).then(result => {
+    let start = req.body.start || 0;
+    let length = req.body.length || 10;
+
+    activityDao.getUserSignUpActivity({
+        open_id: open_id,
+        start: start,
+        length: length
+    }).then(result => {
 
         console.log(result);
         res.json(result);
@@ -162,10 +195,10 @@ router.use('/deleteActivity', function (req, res, next) {
     let deleteActivitySignUpRelationPromise = activityDao.deleteSignUpRelation(({activity_id: activity_id}));
     let deleteActivityPunchRelationPromise = activityDao.deletePunchRelation(({activity_id: activity_id}));
 
-    Promise.all([deleteActivityPromise,deleteActivitySignUpRelationPromise,deleteActivityPunchRelationPromise]).then(result => {
+    Promise.all([deleteActivityPromise, deleteActivitySignUpRelationPromise, deleteActivityPunchRelationPromise]).then(result => {
 
         console.log(result);
-        res.json(result);
+        res.json({ret: 1, result: result});
 
     }).catch(err => {
 
@@ -217,25 +250,38 @@ router.use('/punchActivity', function (req, res, next) {
     let activity_id = req.body.activity_id || '';
     let extra = req.body.extra || '';
 
-    activityDao.punchActivity({
-        activity_id: activity_id,
-        open_id: open_id,
-        extra: extra
-    }).then(result => {
+    activityDao.getActivity({activity_id: activity_id}).then(result => {
 
-        console.log(result);
-        return activityDao.getActivityPunchList({
-            activity_id: activity_id
-        });
+        let type = result.type;
+        if (type === 1) {  //说明创建者禁止了打卡
 
-    }).then(result => {
+            res.json({ret: '-1', message: '创建者禁止了打卡', data:{}});
+            return Promise.resolve();
+        } else {
 
-        res.json(result);
+            return activityDao.punchActivity({
+                activity_id: activity_id,
+                open_id: open_id,
+                extra: extra
+            }).then(result => {
+
+                console.log(result);
+                return activityDao.getActivityPunchList({
+                    activity_id: activity_id
+                });
+            }).then(result => {
+
+                res.json({ret: '0', message: 'success', data: result});
+            });
+        }
+
     }).catch(err => {
 
         console.log('catch err is ' + err);
         res.json(err);
     });
+
+
 });
 
 

@@ -73,6 +73,38 @@ function getActivity(object) {
     });
 }
 
+
+/**
+ * @description 修改活动type
+ * @param object
+ */
+function changeActivityType(object) {
+
+    return new Promise(function (resolve, reject) {
+
+        if (!object.activity_id) {
+            reject('param is err!');
+        }
+        let type = object.type || 0;
+
+        pool.getConnection(function (err, connection) {
+
+            connection.query('UPDATE wb_activity SET type = ? WHERE activity_id = ?',
+                [type, object.activity_id], function (error, results, fields) {
+
+                    if (error) {
+                        reject(error);
+                    }
+                    connection.release();
+                    resolve(results);
+                }
+            );
+
+        });
+    });
+}
+
+
 /**
  * @description 删除活动
  * @param object
@@ -400,6 +432,9 @@ module.exports = {
 
     insertActivity: insertActivity,
     getActivity: getActivity,
+
+    changeActivityType: changeActivityType,
+
     deleteActivity: deleteActivity,
     deleteSignUpRelation: deleteSignUpRelation,
     deletePunchRelation: deletePunchRelation,
