@@ -36,22 +36,24 @@ function getUserInfoBySession(req, res, next) {
     let session = req.session;
     if (session) {
         const getUserBySession = (session => {
-            return {
-                open_id: session.userInfo.openId || '',
-                nick_name: session.userInfo.nickName || '',
-                gender: session.userInfo.gender || 1,
-                language: session.userInfo.language || 0,
-                city: session.userInfo.city || '',
-                province: session.userInfo.province || '',
-                country: session.userInfo.country || '',
-                avatar_url: session.userInfo.avatarUrl || ''
-            }
-        });
+                    return {
+                        open_id: session.userInfo.openId || '',
+                        nick_name: session.userInfo.nickName || '',
+                        gender: session.userInfo.gender || 1,
+                        language: session.userInfo.language || 0,
+                        city: session.userInfo.city || '',
+                        province: session.userInfo.province || '',
+                        country: session.userInfo.country || '',
+                        avatar_url: session.userInfo.avatarUrl || ''
+                    }
+                }
+            )
+        ;
         userDao.insertUser({
             user: getUserBySession(session)
         }).then(result => {
-
-        });
+            }
+        );
     }
 }
 
