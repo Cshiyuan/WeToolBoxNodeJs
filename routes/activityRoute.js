@@ -176,7 +176,25 @@ router.use('/getUserSignUpActivity', function (req, res, next) {
     }).then(result => {
 
         console.log(result);
-        res.json(result);
+
+        let promiseList = [];
+
+        result.forEach(item => {
+            let getActivitySignUpListPromise = activityDao.getActivitySignUpList(({
+                activity_id: item.activity_id
+            })).then(result => {
+                item.signUpList = result;
+                return item
+            })
+            promiseList.push(getActivitySignUpListPromise);
+        })
+
+        return Promise.all(promiseList);
+
+    }).then(results => {
+
+
+        res.json(results)
 
     }).catch(err => {
 

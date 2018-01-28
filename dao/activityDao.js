@@ -372,8 +372,9 @@ function getUserSignUpActivity(object) {
 
         pool.getConnection(function (err, connection) {
 
-            connection.query('SELECT * FROM wb_activity_user_signup_relation'
-                + ' INNER JOIN wb_activity ON wb_activity.activity_id = wb_activity_user_signup_relation.activity_id AND wb_activity_user_signup_relation.open_id = ?' +
+            connection.query('SELECT * FROM (wb_activity_user_signup_relation'
+                + ' INNER JOIN wb_activity ON wb_activity.activity_id = wb_activity_user_signup_relation.activity_id) INNER JOIN wb_user ON wb_activity_user_signup_relation.open_id = wb_user.open_id' +
+                ' AND wb_activity_user_signup_relation.open_id = ?' +
                 ' ORDER BY wb_activity_user_signup_relation.create_time desc, wb_activity.activity_id limit ?, ?',
                 [object.open_id, start, length], function (error, results, fields) {
 
