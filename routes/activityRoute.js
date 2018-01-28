@@ -2,6 +2,7 @@
  * Created by chenshyiuan on 2017/11/24.
  */
 const express = require('express');
+const uuidv4 = require('uuid/v4');
 const router = express.Router();
 const activityDao = require('../dao/activityDao');
 
@@ -24,10 +25,10 @@ router.use('/insertActivity', function (req, res, next) {
     let time = req.body.time || '';  //活动时间
     let date = req.body.date || '';  //活动日期
 
-    let activity_id = 'AC' + open_id + type.toString() + (new Date()).valueOf();  //逻辑id
+    let activity_id = 'AC' + uuidv4();  //逻辑id
     console.log('activityId is ' + activity_id);
 
-    activity = {
+    let activity = {
         activity_id: activity_id,
         open_id: open_id,
         type: type,
