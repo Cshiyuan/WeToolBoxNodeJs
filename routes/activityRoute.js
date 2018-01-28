@@ -17,8 +17,8 @@ router.use('/insertActivity', function (req, res, next) {
 
 
     let type = req.body.type || 0;  //活动类型
-    let title = req.body.title || 'asdasd';  //活动标题
-    let description = req.body.description || 'asdasdew';  //活动描述
+    let title = req.body.title || '';  //活动标题
+    let description = req.body.description || '';  //活动描述
     let images = req.body.images || '';   //活动图片
     let position = req.body.position || ''; //活动位置
     let time = req.body.time || '';  //活动时间

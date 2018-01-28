@@ -48,7 +48,59 @@ let insertPhotos = function (object) {
     });
 }
 
-let getAlbum = function(object) {
+let insertAlbumPhotos = function (object) {
+
+    return new Promise(function (resolve, reject) {
+
+        if (!object.album || !object.photos) {
+            reject('param is err')
+        }
+        let mysqlResults = {};
+        pool.getConnection(function (err, connection) {
+
+            //开启事务
+            connection.beginTransaction(function (err) {
+                if (err) {
+                    reject(err)
+                    // throw err;
+                }
+                connection.query('INSERT INTO wb_album SET ? ', object.album, function (error, results, fields) {
+                    if (error) {
+                        return connection.rollback(function () {
+                            reject(err)
+                            // throw error;
+                        });
+                    }
+
+                    mysqlResults['album'] = results;
+
+                    connection.query('INSERT INTO wb_photo(photo_id, album_id, open_id, name, url, extra) VALUES ? ',
+                        [object.photos], function (error, results, fields) {
+                            if (error) {
+                                return connection.rollback(function () {
+                                    // throw error;
+                                    reject(err)
+                                });
+                            }
+                            mysqlResults['photo'] = results;
+                            connection.commit(function (err) {
+                                if (err) {
+                                    return connection.rollback(function () {
+                                        // throw err;
+                                        reject(err)
+                                    });
+                                }
+
+                                resolve(mysqlResults)  //终于可以返回最终结果
+                            });
+                        });
+                });
+            });
+        });
+    });
+}
+
+let getAlbum = function (object) {
 
     return new Promise(function (resolve, reject) {
 
@@ -73,7 +125,7 @@ let getAlbum = function(object) {
     });
 }
 
-let getPhotosByAlbumId = function(object) {
+let getPhotosByAlbumId = function (object) {
 
     return new Promise(function (resolve, reject) {
 
@@ -97,7 +149,7 @@ let getPhotosByAlbumId = function(object) {
     });
 }
 
-let deleteAlbum = function(object) {
+let deleteAlbum = function (object) {
 
     return new Promise(function (resolve, reject) {
 
@@ -124,7 +176,7 @@ let deleteAlbum = function(object) {
     });
 }
 
-let deletePhotoByPhotoId = function(object) {
+let deletePhotoByPhotoId = function (object) {
 
     return new Promise(function (resolve, reject) {
 
@@ -151,7 +203,7 @@ let deletePhotoByPhotoId = function(object) {
     });
 }
 
-let deletePhotosByAlbumId = function(object) {
+let deletePhotosByAlbumId = function (object) {
 
     return new Promise(function (resolve, reject) {
 
@@ -185,7 +237,8 @@ module.exports = {
     getAlbum: getAlbum,
     getPhotosByAlbumId: getPhotosByAlbumId,
     deleteAlbum: deleteAlbum,
-    deletePhotosByAlbumId:deletePhotosByAlbumId,
-    deletePhotoByPhotoId: deletePhotoByPhotoId()
+    deletePhotosByAlbumId: deletePhotosByAlbumId,
+    deletePhotoByPhotoId: deletePhotoByPhotoId,
+    insertAlbumPhotos: insertAlbumPhotos
 
 };

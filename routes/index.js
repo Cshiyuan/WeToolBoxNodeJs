@@ -35,17 +35,24 @@ router.get('/', function (req, res, next) {
 
     // let photoArray =
 
-    albumDao.insetAlbum({
-        album: album
-    });
-    console.log(photoArray)
+    // albumDao.insetAlbum({
+    //     album: album
+    // });
+    // console.log(photoArray)
+    //
+    // albumDao.insertPhotos({
+    //     photos: [photoArray, photoArray, photoArray]
+    // })
+    //
+    // albumDao.getPhotosByAlbumId({
+    //     album_id: 'sdfervegv'
+    // }).then(result => {
+    //     console.log(result)
+    // })
 
-    albumDao.insertPhotos({
+    albumDao.insertAlbumPhotos({
+        album: album,
         photos: [photoArray, photoArray, photoArray]
-    })
-
-    albumDao.getPhotosByAlbumId({
-        album_id: 'sdfervegv'
     }).then(result => {
         console.log(result)
     })
