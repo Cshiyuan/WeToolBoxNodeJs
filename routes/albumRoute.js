@@ -70,7 +70,11 @@ router.use('/insertAlbum', function (req, res, next) {
 
     }).then(result => {
 
-        results['photo'] = result;
+        result.forEach(item => {
+            let isOwner = item.open_id === open_id;
+            item.isOwner = isOwner;
+        })
+        results['photos'] = result;
         res.json(results)
 
     }).catch(err => {
@@ -99,7 +103,7 @@ router.use('/getAlbum', function (req, res, next) {
 
     }).then(result => {
 
-        results['photo'] = result;
+        results['photos'] = result;
         res.json(results)
 
     }).catch(err => {
@@ -107,6 +111,103 @@ router.use('/getAlbum', function (req, res, next) {
         res.json(err)
     })
 
+
+});
+
+
+/**
+ * 插入图片到特定相册
+ */
+router.use('/insertPhotoToAlbum', function (req, res, next) {
+
+    let session = req.session || {};
+    let open_id = session.userInfo.openId || '';  //用户的open_id
+
+    let album_id = req.body.album_id || '';
+
+    console.log('albumId  is ' + album_id);
+
+    let photos = req.body.photos || {};
+    let photosArray = [];
+    if (photos) {
+        photos.forEach(item => {
+            let photo_id = 'PH' + uuidv4();  //逻辑id
+            console.log('photo_id  is ' + photo_id);
+            let photo = [photo_id, album_id, open_id, item.name || '', item.url || '', item.extra || ''];
+            photosArray.push(photo)
+            // let photo = {
+            //     photo_id: photo_id,
+            //     album_id: album_id,
+            //     open_id: open_id,
+            //     name: item.name || '',
+            //     url: item.url || '',
+            //     extra: item.extra || ''
+            // }
+        })
+    }
+
+    albumDao.insertPhotos({
+        photos: photosArray
+    }).then(result => {
+
+        return albumDao.getPhotosByAlbumId({
+            album_id: album_id
+        })
+
+    }).then(result => {
+
+        result.forEach(item => {
+            let isOwner = item.open_id === open_id;
+            item.isOwner = isOwner;
+        })
+        // results['photos'] = result;
+        res.json(result)
+
+    }).catch(err => {
+
+        res.json(err)
+    })
+
+});
+
+
+/**
+ * 删除特定图片
+ */
+router.use('/deletePhoto', function (req, res, next) {
+
+    let session = req.session || {};
+    let open_id = session.userInfo.openId || '';  //用户的open_id
+
+    let album_id = req.body.album_id || '';
+
+    console.log('albumId  is ' + album_id);
+
+    let photoIds = req.body.photoIds || {};
+    let promiseArray = [];
+    photoIds.forEach(item => {
+
+        promiseArray.push(albumDao.deletePhotoByPhotoId({
+            photo_id: item
+        }));
+    })
+
+    Promise.all(promiseArray).then(result => {
+
+        return albumDao.getPhotosByAlbumId({
+            album_id: album_id
+        })
+    }).then(result => {
+
+        result.forEach(item => {
+            let isOwner = item.open_id === open_id;
+            item.isOwner = isOwner;
+        })
+        res.json(result)
+    }).catch(err => {
+
+        res.json(err)
+    });
 
 });
 

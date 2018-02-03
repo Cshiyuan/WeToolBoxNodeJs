@@ -3,21 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="d121ee54-5173-4d6e-a983-1d45d42324f2" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uuid/.eslintrc.json" afterPath="$PROJECT_DIR$/node_modules/uuid/.eslintrc.json" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uuid/HISTORY.md" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uuid/README.md" afterPath="$PROJECT_DIR$/node_modules/uuid/README.md" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uuid/bin/uuid" afterPath="$PROJECT_DIR$/node_modules/uuid/bin/uuid" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uuid/lib/rng-browser.js" afterPath="$PROJECT_DIR$/node_modules/uuid/lib/rng-browser.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uuid/lib/rng.js" afterPath="$PROJECT_DIR$/node_modules/uuid/lib/rng.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uuid/lib/sha1-browser.js" afterPath="$PROJECT_DIR$/node_modules/uuid/lib/sha1-browser.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uuid/lib/sha1.js" afterPath="$PROJECT_DIR$/node_modules/uuid/lib/sha1.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uuid/package.json" afterPath="$PROJECT_DIR$/node_modules/uuid/package.json" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uuid/v1.js" afterPath="$PROJECT_DIR$/node_modules/uuid/v1.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uuid/v4.js" afterPath="$PROJECT_DIR$/node_modules/uuid/v4.js" />
-      <change beforePath="$PROJECT_DIR$/node_modules/uuid/v5.js" afterPath="$PROJECT_DIR$/node_modules/uuid/v5.js" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" afterPath="$PROJECT_DIR$/package-lock.json" />
-      <change beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
-      <change beforePath="$PROJECT_DIR$/routes/activityRoute.js" afterPath="$PROJECT_DIR$/routes/activityRoute.js" />
+      <change beforePath="$PROJECT_DIR$/dao/albumDao.js" afterPath="$PROJECT_DIR$/dao/albumDao.js" />
       <change beforePath="$PROJECT_DIR$/routes/albumRoute.js" afterPath="$PROJECT_DIR$/routes/albumRoute.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -35,11 +21,9 @@
       <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="699">
+            <state relative-caret-position="0">
               <caret line="78" column="4" lean-forward="false" selection-start-line="78" selection-start-column="4" selection-end-line="78" selection-end-column="4" />
-              <folding>
-                <element signature="n#!!block;n#getUserInfoBySession#0" expanded="false" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -47,8 +31,8 @@
       <file leaf-file-name="cos.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utils/cos.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="19" lean-forward="false" selection-start-line="5" selection-start-column="19" selection-end-line="5" selection-end-column="19" />
+            <state relative-caret-position="0">
+              <caret line="28" column="0" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
               <folding>
                 <element signature="n#!!block;n#signForJsonApi#0" expanded="false" />
               </folding>
@@ -56,13 +40,22 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="mysqlPool.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dao/mysqlPool.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-7">
+              <caret line="14" column="22" lean-forward="false" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="activityRoute.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/activityRoute.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="228">
-              <caret line="36" column="23" lean-forward="true" selection-start-line="36" selection-start-column="23" selection-end-line="36" selection-end-column="23" />
+            <state relative-caret-position="244">
+              <caret line="98" column="13" lean-forward="false" selection-start-line="98" selection-start-column="12" selection-end-line="98" selection-end-column="13" />
               <folding>
-                <element signature="e#1372#2890#0" expanded="false" />
                 <element signature="e#2971#3312#0" expanded="false" />
                 <element signature="e#3399#3869#0" expanded="false" />
                 <element signature="e#3958#4885#0" expanded="false" />
@@ -79,9 +72,11 @@
       <file leaf-file-name="albumRoute.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/routes/albumRoute.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="224">
-              <caret line="65" column="34" lean-forward="true" selection-start-line="65" selection-start-column="34" selection-end-line="65" selection-end-column="34" />
-              <folding />
+            <state relative-caret-position="340">
+              <caret line="173" column="3" lean-forward="true" selection-start-line="173" selection-start-column="3" selection-end-line="173" selection-end-column="3" />
+              <folding>
+                <element signature="e#2216#2628#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -89,7 +84,7 @@
       <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="317">
+            <state relative-caret-position="0">
               <caret line="20" column="19" lean-forward="false" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="19" />
               <folding />
             </state>
@@ -99,16 +94,16 @@
       <file leaf-file-name="albumDao.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dao/albumDao.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="131" column="28" lean-forward="false" selection-start-line="131" selection-start-column="20" selection-end-line="131" selection-end-column="28" />
+            <state relative-caret-position="553">
+              <caret line="192" column="32" lean-forward="false" selection-start-line="192" selection-start-column="24" selection-end-line="192" selection-end-column="32" />
               <folding>
                 <element signature="e#122#589#0" expanded="false" />
                 <element signature="e#628#1275#0" expanded="false" />
                 <element signature="e#1319#3228#0" expanded="false" />
                 <element signature="e#3263#3832#0" expanded="false" />
-                <element signature="e#4480#5080#0" expanded="false" />
-                <element signature="e#5127#5727#0" expanded="false" />
-                <element signature="e#5775#6375#0" expanded="false" />
+                <element signature="e#3877#4655#0" expanded="false" />
+                <element signature="e#4693#5293#0" expanded="false" />
+                <element signature="e#5988#6588#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -117,7 +112,7 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
+            <state relative-caret-position="0">
               <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
               <folding />
             </state>
@@ -127,18 +122,8 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/node_modules/express/lib/router/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="143">
+            <state relative-caret-position="0">
               <caret line="457" column="0" lean-forward="false" selection-start-line="457" selection-start-column="0" selection-end-line="457" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="application.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/node_modules/express/lib/application.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="151">
-              <caret line="219" column="20" lean-forward="false" selection-start-line="219" selection-start-column="20" selection-end-line="219" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -147,8 +132,8 @@
       <file leaf-file-name="activityDao.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dao/activityDao.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1311">
-              <caret line="118" column="0" lean-forward="false" selection-start-line="118" selection-start-column="0" selection-end-line="140" selection-end-column="7" />
+            <state relative-caret-position="0">
+              <caret line="340" column="151" lean-forward="false" selection-start-line="340" selection-start-column="20" selection-end-line="340" selection-end-column="151" />
               <folding>
                 <element signature="n#!!block;n#insertActivity#0" expanded="false" />
                 <element signature="n#!!block;n#getActivity#0" expanded="false" />
@@ -158,8 +143,6 @@
                 <element signature="n#!!block;n#signUpActivity#0" expanded="false" />
                 <element signature="n#!!block;n#punchActivity#0" expanded="false" />
                 <element signature="n#!!block;n#getActivitySignUpList#0" expanded="false" />
-                <element signature="n#!!block;n#getActivityPunchList#0" expanded="false" />
-                <element signature="n#!!block;n#getUserSignUpActivity#0" expanded="false" />
                 <element signature="n#!!block;n#getUserActivityList#0" expanded="false" />
               </folding>
             </state>
@@ -200,9 +183,9 @@
         <option value="$PROJECT_DIR$/dao/activityDao.js" />
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/routes/index.js" />
-        <option value="$PROJECT_DIR$/dao/albumDao.js" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/routes/activityRoute.js" />
+        <option value="$PROJECT_DIR$/dao/albumDao.js" />
         <option value="$PROJECT_DIR$/routes/albumRoute.js" />
       </list>
     </option>
@@ -224,11 +207,10 @@
   <component name="NodeModulesDirectoryManager">
     <handled-path value="$PROJECT_DIR$/node_modules" />
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="-10" />
-    <option name="y" value="23" />
-    <option name="width" value="1227" />
-    <option name="height" value="721" />
+  <component name="ProjectFrameBounds" fullScreen="true">
+    <option name="x" value="-1920" />
+    <option name="width" value="1920" />
+    <option name="height" value="1080" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -245,8 +227,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -285,7 +267,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
-    <property name="settings.editor.selected.configurable" value="settings.nodejs" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Color Scheme Font" />
     <property name="JavaScriptWeakerCompletionTypeGuess" value="true" />
     <property name="javascript.nodejs.core.library.configured.version" value="8.9.4" />
   </component>
@@ -331,23 +313,23 @@
       <workItem from="1516547134768" duration="205000" />
       <workItem from="1516547358125" duration="943000" />
       <workItem from="1516612657175" duration="23599000" />
-      <workItem from="1516872178948" duration="16266000" />
+      <workItem from="1516872178948" duration="20940000" />
+      <workItem from="1517239466686" duration="3666000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="41013000" />
+    <option name="totallyTimeSpent" value="49353000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-10" y="23" width="1227" height="721" extended-state="0" />
-    <editor active="true" />
+    <frame x="-1920" y="0" width="1920" height="1080" extended-state="0" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2567237" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.16354166" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26348227" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21650486" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -377,11 +359,112 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/cos.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="28" column="0" lean-forward="true" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!block;n#signForJsonApi#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/activityRoute.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="36" column="23" lean-forward="true" selection-start-line="36" selection-start-column="23" selection-end-line="36" selection-end-column="23" />
+          <folding>
+            <element signature="e#2971#3312#0" expanded="false" />
+            <element signature="e#3399#3869#0" expanded="false" />
+            <element signature="e#3958#4885#0" expanded="false" />
+            <element signature="e#4961#5626#0" expanded="false" />
+            <element signature="e#5702#6314#0" expanded="false" />
+            <element signature="e#6389#7424#0" expanded="false" />
+            <element signature="e#7511#7818#0" expanded="false" />
+            <element signature="e#7905#8187#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/albumRoute.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="115" column="3" lean-forward="true" selection-start-line="115" selection-start-column="3" selection-end-line="115" selection-end-column="3" />
+          <folding>
+            <element signature="e#2216#2628#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" column="19" lean-forward="false" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dao/albumDao.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="29" column="26" lean-forward="false" selection-start-line="29" selection-start-column="20" selection-end-line="29" selection-end-column="26" />
+          <folding>
+            <element signature="e#122#589#0" expanded="false" />
+            <element signature="e#628#1275#0" expanded="false" />
+            <element signature="e#1319#3228#0" expanded="false" />
+            <element signature="e#3263#3832#0" expanded="false" />
+            <element signature="e#3877#4655#0" expanded="false" />
+            <element signature="e#4693#5293#0" expanded="false" />
+            <element signature="e#5988#6588#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/express/lib/router/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7769">
+          <caret line="457" column="0" lean-forward="false" selection-start-line="457" selection-start-column="0" selection-end-line="457" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dao/activityDao.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2414">
+          <caret line="340" column="151" lean-forward="false" selection-start-line="340" selection-start-column="20" selection-end-line="340" selection-end-column="151" />
+          <folding>
+            <element signature="n#!!block;n#insertActivity#0" expanded="false" />
+            <element signature="n#!!block;n#getActivity#0" expanded="false" />
+            <element signature="n#!!block;n#changeActivityType#0" expanded="false" />
+            <element signature="n#!!block;n#deleteSignUpRelation#0" expanded="false" />
+            <element signature="n#!!block;n#deletePunchRelation#0" expanded="false" />
+            <element signature="n#!!block;n#signUpActivity#0" expanded="false" />
+            <element signature="n#!!block;n#punchActivity#0" expanded="false" />
+            <element signature="n#!!block;n#getActivitySignUpList#0" expanded="false" />
+            <element signature="n#!!block;n#getUserActivityList#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app.js">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="357">
           <caret line="21" column="14" lean-forward="false" selection-start-line="21" selection-start-column="14" selection-end-line="21" selection-end-column="14" />
-          <folding>
-            <element signature="n#!!block;n#getUserInfoBySession#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -407,7 +490,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="3" column="26" lean-forward="false" selection-start-line="3" selection-start-column="26" selection-end-line="3" selection-end-column="26" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -415,7 +497,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="14" column="25" lean-forward="false" selection-start-line="14" selection-start-column="25" selection-end-line="14" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -423,7 +504,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1445">
           <caret line="85" column="36" lean-forward="false" selection-start-line="85" selection-start-column="22" selection-end-line="85" selection-end-column="36" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -448,8 +528,6 @@
             <element signature="n#!!block;n#signUpActivity#0" expanded="false" />
             <element signature="n#!!block;n#punchActivity#0" expanded="false" />
             <element signature="n#!!block;n#getActivitySignUpList#0" expanded="false" />
-            <element signature="n#!!block;n#getActivityPunchList#0" expanded="false" />
-            <element signature="n#!!block;n#getUserSignUpActivity#0" expanded="false" />
             <element signature="n#!!block;n#getUserActivityList#0" expanded="false" />
           </folding>
         </state>
@@ -459,7 +537,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" column="24" lean-forward="false" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -468,7 +545,6 @@
         <state relative-caret-position="102">
           <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
           <folding>
-            <element signature="e#1372#2890#0" expanded="false" />
             <element signature="e#2971#3312#0" expanded="false" />
             <element signature="e#3399#3869#0" expanded="false" />
             <element signature="e#3958#4885#0" expanded="false" />
@@ -485,9 +561,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="12" column="20" lean-forward="false" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
-          <folding>
-            <element signature="n#!!block;n#getUserInfoBySession#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -503,7 +577,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -512,7 +585,6 @@
         <state relative-caret-position="1292">
           <caret line="76" column="16" lean-forward="false" selection-start-line="76" selection-start-column="16" selection-end-line="76" selection-end-column="16" />
           <folding>
-            <element signature="e#1372#2890#0" expanded="false" />
             <element signature="e#2971#3312#0" expanded="false" />
             <element signature="e#3399#3869#0" expanded="false" />
             <element signature="e#3958#4885#0" expanded="false" />
@@ -550,7 +622,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" column="24" lean-forward="false" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -558,7 +629,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="3" column="26" lean-forward="false" selection-start-line="3" selection-start-column="26" selection-end-line="3" selection-end-column="26" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -573,7 +643,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1445">
           <caret line="85" column="36" lean-forward="false" selection-start-line="85" selection-start-column="22" selection-end-line="85" selection-end-column="36" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -581,25 +650,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="14" column="25" lean-forward="false" selection-start-line="14" selection-start-column="25" selection-end-line="14" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/dao/mysqlPool.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="9" column="17" lean-forward="false" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/cos.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="19" lean-forward="false" selection-start-line="5" selection-start-column="19" selection-end-line="5" selection-end-column="19" />
-          <folding>
-            <element signature="n#!!block;n#signForJsonApi#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -607,13 +657,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="151">
           <caret line="219" column="20" lean-forward="false" selection-start-line="219" selection-start-column="20" selection-end-line="219" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/express/lib/router/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="143">
+        <state relative-caret-position="0">
           <caret line="457" column="0" lean-forward="false" selection-start-line="457" selection-start-column="0" selection-end-line="457" selection-end-column="0" />
           <folding />
         </state>
@@ -621,34 +670,42 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="699">
+        <state relative-caret-position="0">
           <caret line="78" column="4" lean-forward="false" selection-start-line="78" selection-start-column="4" selection-end-line="78" selection-end-column="4" />
-          <folding>
-            <element signature="n#!!block;n#getUserInfoBySession#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dao/albumDao.js">
+    <entry file="file://$PROJECT_DIR$/routes/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="131" column="28" lean-forward="false" selection-start-line="131" selection-start-column="20" selection-end-line="131" selection-end-column="28" />
+        <state relative-caret-position="0">
+          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="20" column="19" lean-forward="false" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/cos.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="28" column="0" lean-forward="false" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
           <folding>
-            <element signature="e#122#589#0" expanded="false" />
-            <element signature="e#628#1275#0" expanded="false" />
-            <element signature="e#1319#3228#0" expanded="false" />
-            <element signature="e#3263#3832#0" expanded="false" />
-            <element signature="e#4480#5080#0" expanded="false" />
-            <element signature="e#5127#5727#0" expanded="false" />
-            <element signature="e#5775#6375#0" expanded="false" />
+            <element signature="n#!!block;n#signForJsonApi#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/dao/activityDao.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1311">
-          <caret line="118" column="0" lean-forward="false" selection-start-line="118" selection-start-column="0" selection-end-line="140" selection-end-column="7" />
+        <state relative-caret-position="0">
+          <caret line="340" column="151" lean-forward="false" selection-start-line="340" selection-start-column="20" selection-end-line="340" selection-end-column="151" />
           <folding>
             <element signature="n#!!block;n#insertActivity#0" expanded="false" />
             <element signature="n#!!block;n#getActivity#0" expanded="false" />
@@ -658,35 +715,40 @@
             <element signature="n#!!block;n#signUpActivity#0" expanded="false" />
             <element signature="n#!!block;n#punchActivity#0" expanded="false" />
             <element signature="n#!!block;n#getActivitySignUpList#0" expanded="false" />
-            <element signature="n#!!block;n#getActivityPunchList#0" expanded="false" />
-            <element signature="n#!!block;n#getUserSignUpActivity#0" expanded="false" />
             <element signature="n#!!block;n#getUserActivityList#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/index.js">
+    <entry file="file://$PROJECT_DIR$/dao/mysqlPool.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="0" lean-forward="false" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+        <state relative-caret-position="-7">
+          <caret line="14" column="22" lean-forward="false" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
+    <entry file="file://$PROJECT_DIR$/dao/albumDao.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="317">
-          <caret line="20" column="19" lean-forward="false" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="19" />
-          <folding />
+        <state relative-caret-position="553">
+          <caret line="192" column="32" lean-forward="false" selection-start-line="192" selection-start-column="24" selection-end-line="192" selection-end-column="32" />
+          <folding>
+            <element signature="e#122#589#0" expanded="false" />
+            <element signature="e#628#1275#0" expanded="false" />
+            <element signature="e#1319#3228#0" expanded="false" />
+            <element signature="e#3263#3832#0" expanded="false" />
+            <element signature="e#3877#4655#0" expanded="false" />
+            <element signature="e#4693#5293#0" expanded="false" />
+            <element signature="e#5988#6588#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/activityRoute.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="36" column="23" lean-forward="true" selection-start-line="36" selection-start-column="23" selection-end-line="36" selection-end-column="23" />
+        <state relative-caret-position="244">
+          <caret line="98" column="13" lean-forward="false" selection-start-line="98" selection-start-column="12" selection-end-line="98" selection-end-column="13" />
           <folding>
-            <element signature="e#1372#2890#0" expanded="false" />
             <element signature="e#2971#3312#0" expanded="false" />
             <element signature="e#3399#3869#0" expanded="false" />
             <element signature="e#3958#4885#0" expanded="false" />
@@ -701,9 +763,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/albumRoute.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="65" column="34" lean-forward="true" selection-start-line="65" selection-start-column="34" selection-end-line="65" selection-end-column="34" />
-          <folding />
+        <state relative-caret-position="340">
+          <caret line="173" column="3" lean-forward="true" selection-start-line="173" selection-start-column="3" selection-end-line="173" selection-end-column="3" />
+          <folding>
+            <element signature="e#2216#2628#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>

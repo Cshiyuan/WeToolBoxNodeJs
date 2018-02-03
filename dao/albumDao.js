@@ -135,7 +135,8 @@ let getPhotosByAlbumId = function (object) {
 
         pool.getConnection(function (err, connection) {
 
-            connection.query('SELECT * FROM wb_photo WHERE album_id = ?',
+            // INNER JOIN wb_user ON wb_activity_user_punch_relation.open_id = wb_user.open_id AND wb_activity_user_punch_relation.activity_id = ?
+            connection.query('SELECT * FROM wb_photo INNER JOIN wb_user ON wb_user.open_id = wb_photo.open_id WHERE wb_photo.album_id = ?',
                 object.album_id, function (error, results, fields) {
 
                     if (error) {
