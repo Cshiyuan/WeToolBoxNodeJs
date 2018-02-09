@@ -23,6 +23,73 @@ let insetAlbum = function (object) {
     });
 }
 
+//插入图片到一个实体到默认相册, 如果默认相册没有创建，则会创建一个。
+let insertPhotosToDefaultAlbum = function (object) {
+
+    return new Promise(function (resolve, reject) {
+
+        //此处到object_id 实际为 activity_id
+        if (!object.object_id || !object.photos) {
+            reject('param is err')
+        }
+        let mysqlResults = {};
+        let album_id = 'AB' + object.object_id.split('AC')[1];
+        let coverUrl = object.photos[0][4];
+        console.log('album_id is ' + album_id);
+        let album = {
+            album_id: album_id,
+            object_id: object.object_id,
+            open_id: '',
+            title: '动态相册',
+            description: '',
+            cover: coverUrl || '',
+            extra: ''
+        }
+        pool.getConnection(function (err, connection) {
+
+            //开启事务
+            connection.beginTransaction(function (err) {
+                if (err) {
+                    reject(err)
+                    // throw err;
+                }
+                connection.query('REPLACE INTO wb_album SET ? ', album, function (error, results, fields) {
+                    if (error) {
+                        return connection.rollback(function () {
+                            reject(err)
+                            // throw error;
+                        });
+                    }
+
+                    // mysqlResults['album'] = results;
+
+                    connection.query('INSERT INTO wb_photo(photo_id, album_id, open_id, name, url, extra) VALUES ? ',
+                        [object.photos], function (error, results, fields) {
+                            if (error) {
+                                return connection.rollback(function () {
+                                    // throw error;
+                                    reject(err)
+                                });
+                            }
+                            mysqlResults['photo'] = results;
+                            connection.commit(function (err) {
+                                if (err) {
+                                    return connection.rollback(function () {
+                                        // throw err;
+                                        reject(err)
+                                    });
+                                }
+
+                                resolve(mysqlResults)  //终于可以返回最终结果
+                            });
+                        });
+                });
+            });
+        });
+    });
+
+}
+
 let insertPhotos = function (object) {
 
     return new Promise(function (resolve, reject) {
@@ -31,20 +98,51 @@ let insertPhotos = function (object) {
             reject('param is err')
         }
 
+
         pool.getConnection(function (err, connection) {
 
-            connection.query('INSERT INTO wb_photo(photo_id, album_id, open_id, name, url, extra) VALUES ? ',
-                [object.photos], function (error, results, fields) {
-                    if (error) {
-                        console.log(error)
-                        reject(error)
-                    }
-                    connection.release();
-                    resolve(results);
+            let album_id = object.photos[0][1];
+            let url = object.photos[0][4];
+            //开启事务
+            connection.beginTransaction(function (err) {
+                if (err) {
+                    reject(err)
+                    // throw err;
                 }
-            );
+                connection.query('UPDATE wb_album SET cover = ? WHERE album_id = ? ', [url, album_id], function (error, results, fields) {
+                    if (error) {
+                        return connection.rollback(function () {
+                            reject(err)
+                            // throw error;
+                        });
+                    }
 
+                    // mysqlResults['album'] = results;
+
+                    connection.query('INSERT INTO wb_photo(photo_id, album_id, open_id, name, url, extra) VALUES ? ',
+                        [object.photos], function (error, results, fields) {
+                            if (error) {
+                                return connection.rollback(function () {
+                                    // throw error;
+                                    reject(err)
+                                });
+                            }
+                            // mysqlResults['photo'] = results;
+                            connection.commit(function (err) {
+                                if (err) {
+                                    return connection.rollback(function () {
+                                        // throw err;
+                                        reject(err)
+                                    });
+                                }
+
+                                resolve(results)  //终于可以返回最终结果
+                            });
+                        });
+                });
+            });
         });
+
     });
 }
 
@@ -118,6 +216,31 @@ let getAlbum = function (object) {
                     }
                     connection.release();
                     resolve(results[0]);
+                }
+            );
+
+        });
+    });
+}
+
+let getAlbumList = function (object) {
+
+    return new Promise(function (resolve, reject) {
+
+        if (!object.object_id) {
+            reject('param is err!');
+        }
+
+        pool.getConnection(function (err, connection) {
+
+            connection.query('SELECT * FROM wb_album WHERE object_id = ?',
+                object.object_id, function (error, results, fields) {
+
+                    if (error) {
+                        reject(error);
+                    }
+                    connection.release();
+                    resolve(results);
                 }
             );
 
@@ -236,10 +359,12 @@ module.exports = {
     insetAlbum: insetAlbum,
     insertPhotos: insertPhotos,
     getAlbum: getAlbum,
+    getAlbumList: getAlbumList,
     getPhotosByAlbumId: getPhotosByAlbumId,
     deleteAlbum: deleteAlbum,
     deletePhotosByAlbumId: deletePhotosByAlbumId,
     deletePhotoByPhotoId: deletePhotoByPhotoId,
-    insertAlbumPhotos: insertAlbumPhotos
+    insertAlbumPhotos: insertAlbumPhotos,
+    insertPhotosToDefaultAlbum: insertPhotosToDefaultAlbum
 
 };

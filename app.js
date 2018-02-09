@@ -9,6 +9,8 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 const activityRoute = require('./routes/activityRoute');
 const albumRoute = require('./routes/albumRoute');
+const postRoute = require('./routes/postRoute');
+
 const userDao = require('./dao/userDao');
 
 var app = express();
@@ -77,6 +79,7 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/activity', activityRoute);
 app.use('/album', albumRoute);
+app.use('/post', postRoute);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

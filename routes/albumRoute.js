@@ -16,6 +16,7 @@ router.use('/insertAlbum', function (req, res, next) {
     let object_id = req.body.object_id || '';
     let title = req.body.title || '';  //活动标题
     let description = req.body.description || '';  //活动描述
+    let cover = req.body.cover || '';  //相册封面
     let extra = req.body.extra || '';
 
 
@@ -28,10 +29,11 @@ router.use('/insertAlbum', function (req, res, next) {
         open_id: open_id,
         title: title,
         description: description,
+        cover: cover,
         extra: extra
     }
 
-    let photos = req.body.photos || {};
+    let photos = req.body.photos || [];
     let photosArray = [];
     if (photos) {
         photos.forEach(item => {
@@ -50,17 +52,54 @@ router.use('/insertAlbum', function (req, res, next) {
         })
     }
 
-    let results = {};
-    albumDao.insertAlbumPhotos({
-        album: album,
-        photos: photosArray
-    }).then(result => {
-        // console.log(result)
-        // res.json(result);
-        return albumDao.getAlbum({
-            album_id: album_id
-        })
 
+    let promiseArray = [];
+    promiseArray.push(albumDao.insetAlbum({
+        album: album,
+    }));
+    if (photosArray.length > 0) {
+        promiseArray.push(albumDao.insertPhotos({
+            photos: photosArray
+        }));
+    }
+
+
+    Promise.all(promiseArray).then(results => {
+        console.log(results)
+        let returnResults = {};
+        returnResults['album'] = results[0];
+        if (results[1]) {
+
+            results[1].forEach(item => {
+                let isOwner = item.open_id === open_id;
+                item.isOwner = isOwner;
+            })
+            returnResults['photos'] = results[1];
+        }
+
+        res.json(returnResults)
+
+    }).catch(err => {
+
+        res.json(err)
+    })
+
+
+});
+
+
+/**
+ * 获得相册
+ */
+router.use('/getAlbum', function (req, res, next) {
+
+    let album_id = req.body.album_id || '';
+    let session = req.session || {};
+    let open_id = session.userInfo.openId || '';  //用户的open_id
+    let results = {};
+    albumDao.getAlbum({
+
+        album_id: album_id
     }).then(result => {
 
         results['album'] = result;
@@ -79,32 +118,27 @@ router.use('/insertAlbum', function (req, res, next) {
 
     }).catch(err => {
 
+        console.log(err)
         res.json(err)
     })
+
+
 });
 
 
 /**
- * 获得相册
+ * 获得相册列表
  */
-router.use('/getAlbum', function (req, res, next) {
+router.use('/getAlbumList', function (req, res, next) {
 
-    let album_id = req.body.album_id || '';
-    let results = {};
-    albumDao.getAlbum({
+    let activity_id = req.body.activity_id || '';
+    // let results = {};
+    albumDao.getAlbumList({
 
-        album_id: album_id
+        object_id: activity_id
     }).then(result => {
 
-        results['album'] = result;
-        return albumDao.getPhotosByAlbumId({
-            album_id: album_id
-        })
-
-    }).then(result => {
-
-        results['photos'] = result;
-        res.json(results)
+        res.json(result);
 
     }).catch(err => {
 
