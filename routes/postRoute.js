@@ -118,6 +118,7 @@ router.use('/getPostList', function (req, res, next) {
 
     console.log('activity_id is ' + activity_id);
 
+    let returnPromiseArray = [];
 
     postDao.getPostList({
         object_id: activity_id,
@@ -125,11 +126,99 @@ router.use('/getPostList', function (req, res, next) {
         length: length
     }).then(result => {
 
+        let promiseArray = [];
         result.forEach(item => {
-            // item.
-            // console.log(item.images);
-            item.images = JSON.parse(item.images)
+            item.images = JSON.parse(item.images);
+            promiseArray.push(postDao.checkStarsState({
+                post_id: item.post_id,
+                open_id: open_id
+            }));
         })
+        returnPromiseArray = result;
+        return Promise.all(promiseArray);
+
+    }).then(results => {
+
+        returnPromiseArray.forEach((item, index) => {
+            item.isStar = results[index][0]['count(1)'] > 0;
+        })
+        res.json(returnPromiseArray);
+
+    }).catch(err => {
+
+        console.log('catch err is ' + err);
+        res.json(err);
+    });
+});
+
+/**
+ * 添加评论
+ */
+router.use('/insertComment', function (req, res, next) {
+
+
+    let session = req.session || {};
+    let open_id = session.userInfo.openId || '';  //用户的open_id
+
+
+    let post_id = req.body.post_id || '';  //帖子id
+    let comment_id = 'CD' + uuidv4();  //逻辑id
+    let type = req.body.type || 0;
+    let content = req.body.content || '';
+    let images = req.body.images || '';
+    let star = req.body.star || 0;
+    let extra = req.body.extra || '';
+
+
+    console.log('comment_id is ' + comment_id);
+
+    let comment = {
+        comment_id: comment_id,
+        object_id: post_id,
+        open_id: open_id,
+        type: type,
+        content: content,
+        images: images,
+        star: star,
+        extra: extra
+    }
+
+
+    postDao.insertComment({
+
+        comment: comment
+    }).then(result => {
+
+        res.json({commemt: comment, result: result});
+    }).catch(err => {
+
+        console.log('catch err is ' + err);
+        res.json(err);
+    });
+});
+
+
+/**
+ * 点赞帖子
+ */
+router.use('/starPost', function (req, res, next) {
+
+
+    let session = req.session || {};
+    let open_id = session.userInfo.openId || '';  //用户的open_id
+
+
+    let post_id = req.body.post_id || '';  //帖子id
+
+    console.log('post_id is ' + post_id);
+
+    postDao.starPost({
+
+        post_id: post_id,
+        open_id: open_id
+    }).then(result => {
+
+        console.log(result)
         res.json(result);
     }).catch(err => {
 
@@ -139,101 +228,32 @@ router.use('/getPostList', function (req, res, next) {
 });
 
 /**
- * 添加评论
+ * 点赞帖子
  */
-router.use('/insertComment', function (req, res, next) {
+router.use('/unStarPost', function (req, res, next) {
 
 
     let session = req.session || {};
     let open_id = session.userInfo.openId || '';  //用户的open_id
 
-
     let post_id = req.body.post_id || '';  //帖子id
-    let comment_id = 'CD' + uuidv4();  //逻辑id
-    let type = req.body.type || 0;
-    let content = req.body.content || '';
-    let images = req.body.images || '';
-    let star = req.body.star || 0;
-    let extra = req.body.extra || '';
 
+    console.log('post_id is ' + post_id);
 
-    console.log('comment_id is ' + comment_id);
+    postDao.unStarPost({
 
-    let comment = {
-        comment_id: comment_id,
-        object_id: post_id,
-        open_id: open_id,
-        type: type,
-        content: content,
-        images: images,
-        star: star,
-        extra: extra
-    }
-
-
-    postDao.insertComment({
-
-        comment: comment
+        post_id: post_id,
+        open_id: open_id
     }).then(result => {
 
-        res.json({commemt: comment, result: result});
+        console.log(result)
+        res.json(result);
     }).catch(err => {
 
         console.log('catch err is ' + err);
         res.json(err);
     });
 });
-
-
-// starPost: starPost,
-//     unStarPost: unStarPost,
-//     checkStarsState: checkStarsState
-/**
- * 添加评论
- */
-router.use('/insertComment', function (req, res, next) {
-
-
-    let session = req.session || {};
-    let open_id = session.userInfo.openId || '';  //用户的open_id
-
-
-    let post_id = req.body.post_id || '';  //帖子id
-    let comment_id = 'CD' + uuidv4();  //逻辑id
-    let type = req.body.type || 0;
-    let content = req.body.content || '';
-    let images = req.body.images || '';
-    let star = req.body.star || 0;
-    let extra = req.body.extra || '';
-
-
-    console.log('comment_id is ' + comment_id);
-
-    let comment = {
-        comment_id: comment_id,
-        object_id: post_id,
-        open_id: open_id,
-        type: type,
-        content: content,
-        images: images,
-        star: star,
-        extra: extra
-    }
-
-
-    postDao.insertComment({
-
-        comment: comment
-    }).then(result => {
-
-        res.json({commemt: comment, result: result});
-    }).catch(err => {
-
-        console.log('catch err is ' + err);
-        res.json(err);
-    });
-});
-
 
 
 /**
@@ -247,12 +267,14 @@ router.use('/deleteComment', function (req, res, next) {
 
 
     let comment_id = req.body.comment_id || '';  //评论id
+    let object_id = req.body.object_id || ''; //帖子id
     console.log('comment_id is ' + comment_id);
 
 
     postDao.deleteComment({
 
-        comment_id: comment_id
+        comment_id: comment_id,
+        object_id: object_id
     }).then(result => {
 
         res.json(result);
@@ -277,14 +299,22 @@ router.use('/getCommentList', function (req, res, next) {
     let start = req.body.start || 0;
     let length = req.body.length || 10;
 
-
-    postDao.getCommentList({
+    let promiseArray = [postDao.getCommentList({
         object_id: post_id,
         start: start,
         length: length
-    }).then(result => {
+    }), postDao.checkStarsState({
+        post_id: post_id,
+        open_id: open_id
+    })];
 
-        res.json(result);
+
+    Promise.all(promiseArray).then(results => {
+
+        let returnResult = {};
+        returnResult.comments = results[0];
+        returnResult.starState = results[1];
+        res.json(returnResult);
     }).catch(err => {
 
         console.log('catch err is ' + err);

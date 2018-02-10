@@ -121,18 +121,49 @@ let insertComment = function (object) {
             reject('param is err')
         }
 
+        let object_id = object.comment.object_id || ''
+
+
         pool.getConnection(function (err, connection) {
 
-            connection.query('INSERT INTO wb_comment SET ? ',
-                object.comment, function (error, results, fields) {
-                    if (error) {
-                        reject(error)
-                    }
-                    connection.release();
-                    resolve(results);
+            // let mysqlResults = {}
+            //开启事务
+            connection.beginTransaction(function (err) {
+                if (err) {
+                    reject(err)
+                    // throw err;
                 }
-            );
+                connection.query('INSERT INTO wb_comment SET ?', object.comment, function (error, results, fields) {
+                    if (error) {
+                        return connection.rollback(function () {
+                            reject(err)
+                            // throw error;
+                        });
+                    }
 
+                    // mysqlResults['album'] = results;
+
+                    connection.query('UPDATE wb_post SET comment = comment + 1 WHERE post_id = ? ',
+                        object_id, function (error, results, fields) {
+                            if (error) {
+                                return connection.rollback(function () {
+                                    // throw error;
+                                    reject(err)
+                                });
+                            }
+                            // mysqlResults[0] = results;
+                            connection.commit(function (err) {
+                                if (err) {
+                                    return connection.rollback(function () {
+                                        // throw err;
+                                        reject(err)
+                                    });
+                                }
+                                resolve(results)  //终于可以返回最终结果
+                            });
+                        });
+                });
+            });
         });
     });
 }
@@ -172,7 +203,7 @@ let starPost = function (object) {
 
                     // mysqlResults['album'] = results;
 
-                    connection.query('UPDATE wb_post SET star = star+1 WHERE post_id = ? ',
+                    connection.query('UPDATE wb_post SET star = star + 1 WHERE post_id = ? ',
                         post_id, function (error, results, fields) {
                             if (error) {
                                 return connection.rollback(function () {
@@ -292,22 +323,53 @@ let deleteComment = function (object) {
     return new Promise(function (resolve, reject) {
 
         //此处到object_id 实际为 activity_id
-        if (!object.comment_id) {
+        if (!object.comment_id && !object.object_id) {
             reject('param is err')
         }
 
+        let object_id = object.object_id || '';
+
+
         pool.getConnection(function (err, connection) {
 
-            connection.query('DELETE FROM  wb_comment WHERE comment_id =  ? ',
-                object.comment_id, function (error, results, fields) {
-                    if (error) {
-                        reject(error)
-                    }
-                    connection.release();
-                    resolve(results);
+            // let mysqlResults = {}
+            //开启事务
+            connection.beginTransaction(function (err) {
+                if (err) {
+                    reject(err)
+                    // throw err;
                 }
-            );
+                connection.query('DELETE FROM wb_comment WHERE comment_id =  ? ', object.comment_id, function (error, results, fields) {
+                    if (error) {
+                        return connection.rollback(function () {
+                            reject(err)
+                            // throw error;
+                        });
+                    }
 
+                    // mysqlResults['album'] = results;
+
+                    connection.query('UPDATE wb_post SET comment = comment - 1 WHERE post_id = ? ',
+                        object_id, function (error, results, fields) {
+                            if (error) {
+                                return connection.rollback(function () {
+                                    // throw error;
+                                    reject(err)
+                                });
+                            }
+                            // mysqlResults[0] = results;
+                            connection.commit(function (err) {
+                                if (err) {
+                                    return connection.rollback(function () {
+                                        // throw err;
+                                        reject(err)
+                                    });
+                                }
+                                resolve(results)  //终于可以返回最终结果
+                            });
+                        });
+                });
+            });
         });
     });
 }
