@@ -43,7 +43,7 @@ router.use('/insertPost', function (req, res, next) {
             images.push(item.url);
         })
     }
-    images = JSON.stringify(images); //转化为json字符串存储
+    let imagesString = JSON.stringify(images); //转化为json字符串存储
 
 
     let post = {
@@ -53,7 +53,7 @@ router.use('/insertPost', function (req, res, next) {
         type: type,
         title: title,
         content: content,
-        images: images,
+        images: imagesString,
         star: star || 0,
         extra: extra || '',
     };
@@ -68,6 +68,22 @@ router.use('/insertPost', function (req, res, next) {
     }
 
     Promise.all(promiseArray).then(result => {
+        //创建返回默认
+        post.images = images;
+        post.isStar = false;
+        post.star = 0;
+        post.comment = 0;
+        post.time = '刚刚'
+
+        post.open_id = session.userInfo.openId || '';
+        post.nick_name = session.userInfo.nickName || '';
+        post.gender = session.userInfo.gender || 1;
+        post.language = session.userInfo.language || 0;
+        post.city = session.userInfo.city || '';
+        post.province = session.userInfo.province || '';
+        post.country = session.userInfo.country || '';
+        post.avatar_url = session.userInfo.avatarUrl || '';
+
 
         res.json({post: post, result: result});
     }).catch(err => {
@@ -189,7 +205,17 @@ router.use('/insertComment', function (req, res, next) {
         comment: comment
     }).then(result => {
 
-        res.json({commemt: comment, result: result});
+        // comment
+        comment.time = '刚刚'
+        comment.open_id = session.userInfo.openId || '';
+        comment.nick_name = session.userInfo.nickName || '';
+        comment.gender = session.userInfo.gender || 1;
+        comment.language = session.userInfo.language || 0;
+        comment.city = session.userInfo.city || '';
+        comment.province = session.userInfo.province || '';
+        comment.country = session.userInfo.country || '';
+        comment.avatar_url = session.userInfo.avatarUrl || '';
+        res.json({comment: comment, result: result});
     }).catch(err => {
 
         console.log('catch err is ' + err);
@@ -299,22 +325,18 @@ router.use('/getCommentList', function (req, res, next) {
     let start = req.body.start || 0;
     let length = req.body.length || 10;
 
-    let promiseArray = [postDao.getCommentList({
+
+
+    postDao.getCommentList({
         object_id: post_id,
         start: start,
         length: length
-    }), postDao.checkStarsState({
-        post_id: post_id,
-        open_id: open_id
-    })];
+    }).then(results => {
 
-
-    Promise.all(promiseArray).then(results => {
-
-        let returnResult = {};
-        returnResult.comments = results[0];
-        returnResult.starState = results[1];
-        res.json(returnResult);
+        // let returnResult = {};
+        // returnResult.comments = results[0];
+        // returnResult.starState = results[1];
+        res.json(results);
     }).catch(err => {
 
         console.log('catch err is ' + err);
