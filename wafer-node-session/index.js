@@ -5,7 +5,9 @@ const crypto = require('crypto');
 const login = require('./lib/login');
 const constants = require('./lib/constants');
 const WXBizDataCrypt = require('./lib/WXBizDataCrypt');
-const { Cookie, Store, MemoryStore } = require('express-session');
+const {Cookie, Store, MemoryStore} = require('express-session');
+
+const userDao = require('../dao/userDao');
 
 /**
  * 创建小程序会话中间件
@@ -66,7 +68,7 @@ function session(options = {}) {
                 if (!session) {
                     throw new Error('会话过期');
                 }
-                
+
                 if (skey != generateSkey(session.sessionKey)) {
                     throw new Error('skey 不正确');
                 }
@@ -112,8 +114,8 @@ function session(options = {}) {
                 encryptData = requireHeader(constants.WX_HEADER_ENCRYPTED_DATA);
                 iv = requireHeader(constants.WX_HEADER_IV);
             } catch (error) {
-                const { type, message } = error;
-                response.json({ type, message });
+                const {type, message} = error;
+                response.json({type, message});
                 response.end();
                 return;
             }
@@ -121,7 +123,7 @@ function session(options = {}) {
             let session;
 
             try {
-                const { sessionKey, openId } = yield login({ appId, appSecret, code });
+                const {sessionKey, openId} = yield login({appId, appSecret, code});
 
                 const wxBiz = new WXBizDataCrypt(appId, sessionKey);
                 const userInfo = wxBiz.decryptData(encryptData, iv);
@@ -131,14 +133,36 @@ function session(options = {}) {
                 session.skey = generateSkey(sessionKey);
                 session.sessionKey = sessionKey;
                 session.userInfo = userInfo;
-                session.cookie = new Cookie({ maxAge }); // fake cookie to support express-session Stores
+                session.cookie = new Cookie({maxAge}); // fake cookie to support express-session Stores
             } catch (err) {
                 console.error(err);
-                const { type, message } = err;
-                response.json({ type, message });
+                const {type, message} = err;
+                response.json({type, message});
                 response.end();
                 return;
             }
+
+            //创建用户表
+            const getUserBySession = (session => {
+                        return {
+                            open_id: session.userInfo.openId || '',
+                            nick_name: session.userInfo.nickName || '',
+                            gender: session.userInfo.gender || 1,
+                            language: session.userInfo.language || 0,
+                            city: session.userInfo.city || '',
+                            province: session.userInfo.province || '',
+                            country: session.userInfo.country || '',
+                            avatar_url: session.userInfo.avatarUrl || ''
+                        }
+                    }
+                )
+            ;
+            console.log('insertUser! and save the session!')
+            userDao.insertUser({
+                user: getUserBySession(session)
+            }).then(result => {
+
+            });
 
             // save the session
             store.set(session.id, session, (err) => {

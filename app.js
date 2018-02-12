@@ -11,12 +11,12 @@ const activityRoute = require('./routes/activityRoute');
 const albumRoute = require('./routes/albumRoute');
 const postRoute = require('./routes/postRoute');
 
-const userDao = require('./dao/userDao');
+
 
 var app = express();
 
 
-const session = require('wafer-node-session');
+const session = require('./wafer-node-session');
 const sessionStore = require('./dao/sessionStore');
 
 
@@ -32,35 +32,35 @@ app.use(session({
     store: sessionStore
 }));
 
-//一个中间件，检查请求里的Session
-function getUserInfoBySession(req, res, next) {
-
-    next();
-    let session = req.session;
-    if (session) {
-        const getUserBySession = (session => {
-                    return {
-                        open_id: session.userInfo.openId || '',
-                        nick_name: session.userInfo.nickName || '',
-                        gender: session.userInfo.gender || 1,
-                        language: session.userInfo.language || 0,
-                        city: session.userInfo.city || '',
-                        province: session.userInfo.province || '',
-                        country: session.userInfo.country || '',
-                        avatar_url: session.userInfo.avatarUrl || ''
-                    }
-                }
-            )
-        ;
-        userDao.insertUser({
-            user: getUserBySession(session)
-        }).then(result => {
-            }
-        );
-    }
-}
-
-app.use(getUserInfoBySession);
+// //一个中间件，检查请求里的Session
+// function getUserInfoBySession(req, res, next) {
+//
+//     next();
+//     let session = req.session;
+//     if (session) {
+//         const getUserBySession = (session => {
+//                     return {
+//                         open_id: session.userInfo.openId || '',
+//                         nick_name: session.userInfo.nickName || '',
+//                         gender: session.userInfo.gender || 1,
+//                         language: session.userInfo.language || 0,
+//                         city: session.userInfo.city || '',
+//                         province: session.userInfo.province || '',
+//                         country: session.userInfo.country || '',
+//                         avatar_url: session.userInfo.avatarUrl || ''
+//                     }
+//                 }
+//             )
+//         ;
+//         userDao.insertUser({
+//             user: getUserBySession(session)
+//         }).then(result => {
+//             }
+//         );
+//     }
+// }
+//
+// app.use(getUserInfoBySession);
 
 
 // view engine setup
