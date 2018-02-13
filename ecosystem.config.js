@@ -14,7 +14,12 @@ module.exports = {
       },
       env_production : {
         NODE_ENV: 'production'
-      }
+      },
+      //配置 out log 的文件路径
+      "out_file": "./log/out.log",
+
+      //配置 error log 的文件路径
+      "error_file": "./log/err.log",
     },
     // 还可以配置第二个应用
     // Second application
