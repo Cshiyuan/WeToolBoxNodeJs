@@ -42,7 +42,7 @@ module.exports = {
 
       // 服务器（Server）需要获取GitHub上的仓库
       // 所以要配置Deploy Keys
-      ref  : 'origin/master',
+      ref  : 'origin/production',
       repo : 'git@github.com:Cshiyuan/WeToolBoxNodeJs.git',
       path : '/data/www/production',
       'post-deploy' : 'npm install && pm2 reload ecosystem.config.js --env production'
