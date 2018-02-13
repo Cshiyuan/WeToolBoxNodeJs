@@ -19,6 +19,10 @@ router.use('/insertAlbum', function (req, res, next) {
     let cover = req.body.cover || '';  //相册封面
     let extra = req.body.extra || '';
 
+    if (cover === '') {  //如果没有封面,设置为默认封面
+        cover = '/20180213/895b61fe-85e0-4e6f-9051-90a8a5fa7797.png'
+    }
+
 
     let album_id = 'AB' + uuidv4();  //逻辑id
     console.log('albumId  is ' + album_id);
@@ -67,7 +71,7 @@ router.use('/insertAlbum', function (req, res, next) {
     Promise.all(promiseArray).then(results => {
         console.log(results)
         let returnResults = {};
-        if(results[0]) {
+        if (results[0]) {
             returnResults['album'] = album;
         }
 
@@ -94,30 +98,23 @@ router.use('/insertAlbum', function (req, res, next) {
 /**
  * 获得相册
  */
-router.use('/getAlbum', function (req, res, next) {
+router.use('/getAlbumPhotos', function (req, res, next) {
 
     let album_id = req.body.album_id || '';
     let session = req.session || {};
     let open_id = session.userInfo.openId || '';  //用户的open_id
     let results = {};
-    albumDao.getAlbum({
+    albumDao.getPhotosByAlbumId({
 
         album_id: album_id
-    }).then(result => {
-
-        results['album'] = result;
-        return albumDao.getPhotosByAlbumId({
-            album_id: album_id
-        })
-
     }).then(result => {
 
         result.forEach(item => {
             let isOwner = item.open_id === open_id;
             item.isOwner = isOwner;
         })
-        results['photos'] = result;
-        res.json(results)
+        // results['photos'] = result;
+        res.json(result)
 
     }).catch(err => {
 
