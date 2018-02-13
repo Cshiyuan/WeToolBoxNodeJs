@@ -67,7 +67,10 @@ router.use('/insertAlbum', function (req, res, next) {
     Promise.all(promiseArray).then(results => {
         console.log(results)
         let returnResults = {};
-        returnResults['album'] = results[0];
+        if(results[0]) {
+            returnResults['album'] = album;
+        }
+
         if (results[1]) {
 
             results[1].forEach(item => {
