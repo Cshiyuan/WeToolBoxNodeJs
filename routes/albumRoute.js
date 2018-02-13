@@ -96,6 +96,34 @@ router.use('/insertAlbum', function (req, res, next) {
 
 
 /**
+ * 添加相册
+ */
+router.use('/deleteAlbum', function (req, res, next) {
+
+
+    let session = req.session || {};
+    let open_id = session.userInfo.openId || '';  //用户的open_id
+
+
+    let album_id = req.body.album_id || '';
+
+    albumDao.deleteAlbum({
+
+        album_id: album_id
+
+    }).then(result => {
+
+        res.json(result)
+    }).catch(err => {
+
+        res.json(err)
+    })
+
+
+});
+
+
+/**
  * 获得相册
  */
 router.use('/getAlbumPhotos', function (req, res, next) {
