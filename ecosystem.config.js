@@ -47,16 +47,16 @@ module.exports = {
       path : '/data/www/production',
       'post-deploy' : 'npm install && pm2 reload ecosystem.config.js --env production'
     },
-    dev : {
-      user : 'root',
-      host : '119.29.186.160',
-      ref  : 'origin/master',
-      repo : 'git@github.com:repo.git',
-      path : '/var/www/development',
-      'post-deploy' : 'npm install && pm2 reload ecosystem.config.js --env dev',
-      env  : {
-        NODE_ENV: 'dev'
-      }
-    }
+    // dev : {
+    //   user : 'root',
+    //   host : '119.29.186.160',
+    //   ref  : 'origin/master',
+    //   repo : 'git@github.com:repo.git',
+    //   path : '/var/www/development',
+    //   'post-deploy' : 'npm install && pm2 reload ecosystem.config.js --env dev',
+    //   env  : {
+    //     NODE_ENV: 'dev'
+    //   }
+    // }
   }
 };
