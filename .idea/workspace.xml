@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d121ee54-5173-4d6e-a983-1d45d42324f2" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/routes/albumRoute.js" afterPath="$PROJECT_DIR$/routes/albumRoute.js" />
+      <change beforePath="$PROJECT_DIR$/ecosystem.config.js" afterPath="$PROJECT_DIR$/ecosystem.config.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -69,17 +68,27 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="albumRoute.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="albumRoute.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/albumRoute.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="371">
-              <caret line="120" column="0" lean-forward="true" selection-start-line="120" selection-start-column="0" selection-end-line="120" selection-end-column="0" />
+            <state relative-caret-position="269">
+              <caret line="114" column="0" lean-forward="true" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
               <folding>
                 <element signature="e#219#2401#0" expanded="false" />
                 <element signature="e#3474#3719#0" expanded="false" />
                 <element signature="e#3805#5112#0" expanded="false" />
                 <element signature="e#5188#5963#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ecosystem.config.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/ecosystem.config.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="476">
+              <caret line="28" column="8" lean-forward="true" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="8" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -136,16 +145,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="sessionStore.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dao/sessionStore.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="20" lean-forward="false" selection-start-line="5" selection-start-column="20" selection-end-line="5" selection-end-column="20" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -196,6 +195,7 @@
         <option value="$PROJECT_DIR$/wafer-node-session/index.js" />
         <option value="$PROJECT_DIR$/dao/mysqlPool.js" />
         <option value="$PROJECT_DIR$/routes/albumRoute.js" />
+        <option value="$PROJECT_DIR$/ecosystem.config.js" />
       </list>
     </option>
   </component>
@@ -326,12 +326,12 @@
       <workItem from="1517239466686" duration="38169000" />
       <workItem from="1518273279371" duration="2566000" />
       <workItem from="1518409582423" duration="5854000" />
-      <workItem from="1518529229249" duration="358000" />
+      <workItem from="1518529229249" duration="680000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="92634000" />
+    <option name="totallyTimeSpent" value="92956000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="721" extended-state="6" />
@@ -370,14 +370,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/dao/sessionStore.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="29" lean-forward="false" selection-start-line="10" selection-start-column="29" selection-end-line="10" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dao/activityDao.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2975">
@@ -816,14 +808,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/albumRoute.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="371">
-          <caret line="120" column="0" lean-forward="true" selection-start-line="120" selection-start-column="0" selection-end-line="120" selection-end-column="0" />
+        <state relative-caret-position="269">
+          <caret line="114" column="0" lean-forward="true" selection-start-line="114" selection-start-column="0" selection-end-line="114" selection-end-column="0" />
           <folding>
             <element signature="e#219#2401#0" expanded="false" />
             <element signature="e#3474#3719#0" expanded="false" />
             <element signature="e#3805#5112#0" expanded="false" />
             <element signature="e#5188#5963#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ecosystem.config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="476">
+          <caret line="28" column="8" lean-forward="true" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="8" />
+          <folding />
         </state>
       </provider>
     </entry>
