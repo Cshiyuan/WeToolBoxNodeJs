@@ -45,7 +45,7 @@ module.exports = {
       ref  : 'origin/production',
       repo : 'git@github.com:Cshiyuan/WeToolBoxNodeJs.git',
       path : '/data/www/production',
-      'post-deploy' : 'npm install && pm2 reload ecosystem.config.js --env production'
+      'post-deploy' : 'npm install && pm2 startOrRestart ecosystem.json --env production'
     },
     // dev : {
     //   user : 'root',
