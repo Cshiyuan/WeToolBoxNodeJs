@@ -7,30 +7,30 @@ const albumDao = require('../dao/albumDao');
 router.get('/', function (req, res, next) {
 
 
-    let album = {
-        album_id: 'sdf',
-        object_id: 'asdasdwe',
-        open_id: ' asdwferg',
-        title: 'sdfgerg',
-        description: 'sdfeberg',
-        extra: 'fegrboijrtg'
-    }
+    // let album = {
+    //     album_id: 'sdf',
+    //     object_id: 'asdasdwe',
+    //     open_id: ' asdwferg',
+    //     title: 'sdfgerg',
+    //     description: 'sdfeberg',
+    //     extra: 'fegrboijrtg'
+    // }
 
-    let photo = {
-        photo_id: 'sdfwefwrf',
-        album_id: 'sdfervegv',
-        open_id: 'wefevberb',
-        name: 'efevgerv',
-        url: 'wefwef',
-        extra: 'ergergergef'
-    }
+    // let photo = {
+    //     photo_id: 'sdfwefwrf',
+    //     album_id: 'sdfervegv',
+    //     open_id: 'wefevberb',
+    //     name: 'efevgerv',
+    //     url: 'wefwef',
+    //     extra: 'ergergergef'
+    // }
 
-    let photoArray = [];
-    for (var i in photo) {
+    // let photoArray = [];
+    // for (var i in photo) {
 
-        // console.log(i, ":", photo[i]);
-        photoArray.push(photo[i])
-    }
+    //     // console.log(i, ":", photo[i]);
+    //     photoArray.push(photo[i])
+    // }
 
 
     // let photoArray =
@@ -50,12 +50,12 @@ router.get('/', function (req, res, next) {
     //     console.log(result)
     // })
 
-    albumDao.insertAlbumPhotos({
-        album: album,
-        photos: [photoArray, photoArray, photoArray]
-    }).then(result => {
-        console.log(result)
-    })
+    // albumDao.insertAlbumPhotos({
+    //     album: album,
+    //     photos: [photoArray, photoArray, photoArray]
+    // }).then(result => {
+    //     console.log(result)
+    // })
 
     res.render('index', {title: 'Express'});
 
