@@ -9,6 +9,8 @@ module.exports = {
     {
       name      : 'wetoolboxapi',  //项目名称
       script    : './bin/www',  // 程序入口
+      "error_file"      : "./logs/error.log",
+      "out_file"        : "./logs/out.log",
       env: {
         COMMON_VARIABLE: 'true'
       },
