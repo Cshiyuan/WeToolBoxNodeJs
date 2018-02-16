@@ -66,6 +66,7 @@ function session(options = {}) {
             console.log('check session!')
             try {
                 const session = yield pify(store.get.bind(store))(id);
+                console.log('从store中获取到会话信息')
                 if (!session) {
                     console.log('会话过期')
                     throw new Error('会话过期');
