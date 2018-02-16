@@ -159,6 +159,7 @@ let insertComment = function (object) {
                                         reject(err)
                                     });
                                 }
+                                connection.release();
                                 resolve(results)  //终于可以返回最终结果
                             });
                         });
@@ -219,7 +220,7 @@ let starPost = function (object) {
                                         reject(err)
                                     });
                                 }
-
+                                connection.release();
                                 resolve(results)  //终于可以返回最终结果
                             });
                         });
@@ -278,7 +279,7 @@ let unStarPost = function (object) {
                                         reject(err)
                                     });
                                 }
-
+                                connection.release();
                                 resolve(results)  //终于可以返回最终结果
                             });
                         });
@@ -365,6 +366,7 @@ let deleteComment = function (object) {
                                         reject(err)
                                     });
                                 }
+                                connection.release();
                                 resolve(results)  //终于可以返回最终结果
                             });
                         });

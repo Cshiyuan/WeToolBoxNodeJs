@@ -79,7 +79,7 @@ let insertPhotosToDefaultAlbum = function (object) {
                                         reject(err)
                                     });
                                 }
-
+                                connection.release();
                                 resolve(mysqlResults)  //终于可以返回最终结果
                             });
                         });
@@ -135,7 +135,7 @@ let insertPhotos = function (object) {
                                         reject(err)
                                     });
                                 }
-
+                                connection.release();
                                 resolve(results)  //终于可以返回最终结果
                             });
                         });
@@ -188,6 +188,7 @@ let insertAlbumPhotos = function (object) {
                                         reject(err)
                                     });
                                 }
+                                connection.release();
 
                                 resolve(mysqlResults)  //终于可以返回最终结果
                             });
