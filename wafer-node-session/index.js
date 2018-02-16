@@ -67,10 +67,12 @@ function session(options = {}) {
             try {
                 const session = yield pify(store.get.bind(store))(id);
                 if (!session) {
+                    console.log('会话过期')
                     throw new Error('会话过期');
                 }
 
                 if (skey != generateSkey(session.sessionKey)) {
+                    console.log('skey 不正确')
                     throw new Error('skey 不正确');
                 }
                 request.sessionID = id;
@@ -85,6 +87,7 @@ function session(options = {}) {
                     next();
                 }
             } catch (err) {
+                console.log('catch error!')
                 const errObj = {
                     [constants.WX_SESSION_MAGIC_ID]: 1,
                     error: constants.ERR_INVALID_SESSION,
@@ -97,6 +100,7 @@ function session(options = {}) {
                     next(request, response);
                 }
             }
+            console.log('return!')
             return;
         }
 
