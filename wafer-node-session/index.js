@@ -63,6 +63,7 @@ function session(options = {}) {
         const id = getParam(constants.WX_HEADER_ID);
         const skey = getParam(constants.WX_HEADER_SKEY);
         if (id && skey) {
+            console.log('check session!')
             try {
                 const session = yield pify(store.get.bind(store))(id);
                 if (!session) {
@@ -80,6 +81,7 @@ function session(options = {}) {
                         message: '小程序会话已登录'
                     });
                 } else {
+                    console.log('session complete!')
                     next();
                 }
             } catch (err) {
