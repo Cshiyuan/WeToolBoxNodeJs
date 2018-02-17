@@ -145,6 +145,7 @@ router.use('/getPostListAndAlbumList', function (req, res, next) {
         object_id: activity_id
     })).then(results => {
 
+        console.log(results);
         let promiseArray = [];
 
         //遍历相册，设置权限

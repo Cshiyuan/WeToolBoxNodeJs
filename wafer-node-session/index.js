@@ -66,7 +66,7 @@ function session(options = {}) {
             console.log('check session!')
             try {
                 const session = yield pify(store.get.bind(store))(id);
-                console.log('从store中获取到会话信息')
+                // console.log('从store中获取到会话信息')
                 if (!session) {
                     console.log('会话过期')
                     throw new Error('会话过期');
@@ -88,7 +88,7 @@ function session(options = {}) {
                     next();
                 }
             } catch (err) {
-                console.log('catch error!')
+                // console.log('catch error!')
                 const errObj = {
                     [constants.WX_SESSION_MAGIC_ID]: 1,
                     error: constants.ERR_INVALID_SESSION,
@@ -101,7 +101,7 @@ function session(options = {}) {
                     next(request, response);
                 }
             }
-            console.log('return!')
+            // console.log('return!')
             return;
         }
 
