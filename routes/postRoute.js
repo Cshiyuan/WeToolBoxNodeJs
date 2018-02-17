@@ -140,9 +140,9 @@ router.use('/getPostListAndAlbumList', function (req, res, next) {
         object_id: activity_id,
         start: start,
         length: length
-    }), albumDao.getPhotosByAlbumId({
+    }), albumDao.getAlbumList({
 
-        album_id: album_id
+        object_id: activity_id
     })).then(results => {
 
         let promiseArray = [];
