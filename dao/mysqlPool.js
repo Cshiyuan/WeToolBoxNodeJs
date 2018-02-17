@@ -8,6 +8,7 @@ const pool = mysql.createPool({
     host: "localhost",
     user: "root",
     password: " Csy19951226!",
+    // password: "",
     database: 'wetoolbox',
     // multipleStatements: true  有可能被注入的风险
 });

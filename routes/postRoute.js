@@ -59,7 +59,7 @@ router.use('/insertPost', function (req, res, next) {
     };
 
     let promiseArray = []
-    promiseArray.push(postDao.insertPost({post: post}));
+    promiseArray.push(postDao.insertPost({ post: post }));
     if (photosArray.length > 0) {
         promiseArray.push(albumDao.insertPhotosToDefaultAlbum({
             object_id: activity_id,
@@ -85,7 +85,7 @@ router.use('/insertPost', function (req, res, next) {
         post.avatar_url = session.userInfo.avatarUrl || '';
 
 
-        res.json({post: post, result: result});
+        res.json({ post: post, result: result });
     }).catch(err => {
 
         console.log('catch err is ' + err);
@@ -116,6 +116,73 @@ router.use('/deletePost', function (req, res, next) {
         console.log(error)
     })
 });
+
+/**
+ * 添加拉取
+ */
+router.use('/getPostListAndAlbumList', function (req, res, next) {
+
+
+    let session = req.session || {};
+    let open_id = session.userInfo.openId || '';  //用户的open_id
+
+
+    let start = req.body.start || 0;
+    let length = req.body.length || 10;
+    let activity_id = req.body.activity_id || '';  //帖子id
+
+
+    console.log('activity_id is ' + activity_id);
+
+    let returnPromiseArray = {};
+
+    Promise.all(postDao.getPostList({
+        object_id: activity_id,
+        start: start,
+        length: length
+    }), albumDao.getPhotosByAlbumId({
+
+        album_id: album_id
+    })).then(results => {
+
+        let promiseArray = [];
+
+        //遍历相册，设置权限
+        results[1].forEach(item => {
+            let isOwner = item.open_id === open_id;
+            item.isOwner = isOwner;
+        })
+        // results['photos'] = result;
+
+        //遍历帖子，设置权限
+        results[0].forEach(item => {
+            let isOwner = item.open_id === open_id;
+            item.isOwner = isOwner;
+            item.images = JSON.parse(item.images);
+            promiseArray.push(postDao.checkStarsState({
+                post_id: item.post_id,
+                open_id: open_id
+            }));
+        })
+
+        returnPromiseArray['postList'] = results[0];
+        returnPromiseArray['albumList'] = results[1];
+        return Promise.all(promiseArray);
+
+    }).then(results => {
+
+        returnPromiseArray['postList'].forEach((item, index) => {
+            item.isStar = results[index][0]['count(1)'] > 0;
+        })
+        res.json(returnPromiseArray);
+
+    }).catch(err => {
+
+        console.log('catch err is ' + err);
+        res.json(err);
+    });
+});
+
 
 /**
  * 添加拉取
@@ -167,6 +234,7 @@ router.use('/getPostList', function (req, res, next) {
     });
 });
 
+
 /**
  * 添加评论
  */
@@ -215,7 +283,7 @@ router.use('/insertComment', function (req, res, next) {
         comment.province = session.userInfo.province || '';
         comment.country = session.userInfo.country || '';
         comment.avatar_url = session.userInfo.avatarUrl || '';
-        res.json({comment: comment, result: result});
+        res.json({ comment: comment, result: result });
     }).catch(err => {
 
         console.log('catch err is ' + err);
