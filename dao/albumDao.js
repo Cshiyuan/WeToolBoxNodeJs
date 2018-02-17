@@ -234,7 +234,7 @@ let getAlbumList = function (object) {
 
         pool.getConnection(function (err, connection) {
 
-            connection.query('SELECT * FROM wb_album WHERE object_id = ?',
+            connection.query('SELECT * FROM wb_album WHERE object_id = ? ORDER BY wb_album.create_time desc',
                 object.object_id, function (error, results, fields) {
 
                     if (error) {
