@@ -136,14 +136,14 @@ router.use('/getPostListAndAlbumList', function (req, res, next) {
 
     let returnPromiseArray = {};
 
-    Promise.all(postDao.getPostList({
+    Promise.all([postDao.getPostList({
         object_id: activity_id,
         start: start,
         length: length
     }), albumDao.getAlbumList({
 
         object_id: activity_id
-    })).then(results => {
+    })]).then(results => {
 
         console.log(results);
         let promiseArray = [];
