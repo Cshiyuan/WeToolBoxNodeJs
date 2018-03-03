@@ -1,8 +1,6 @@
+
 const express = require('express');
-const uuidv4 = require('uuid/v4');
 const router = express.Router();
-const postDao = require('../dao/postDao');
-const albumDao = require('../dao/albumDao');
 const WXBizDataCrypt = require('../wafer-node-session/lib/WXBizDataCrypt');
 
 let appId = 'wx4097cfe13dfa3a6c';
