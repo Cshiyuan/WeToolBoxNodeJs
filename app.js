@@ -10,6 +10,7 @@ var users = require('./routes/users');
 const activityRoute = require('./routes/activityRoute');
 const albumRoute = require('./routes/albumRoute');
 const postRoute = require('./routes/postRoute');
+const groupRoute = require('./routes/groupRoute');
 
 
 
@@ -71,7 +72,7 @@ app.set('view engine', 'jade');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -80,6 +81,7 @@ app.use('/users', users);
 app.use('/activity', activityRoute);
 app.use('/album', albumRoute);
 app.use('/post', postRoute);
+aoo.use('/group', groupRoute);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
