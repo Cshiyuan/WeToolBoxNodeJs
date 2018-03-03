@@ -81,7 +81,7 @@ app.use('/users', users);
 app.use('/activity', activityRoute);
 app.use('/album', albumRoute);
 app.use('/post', postRoute);
-aoo.use('/group', groupRoute);
+app.use('/group', groupRoute);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
