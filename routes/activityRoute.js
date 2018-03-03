@@ -53,7 +53,6 @@ router.use('/insertActivity', function (req, res, next) {
 
     }).then(result => {
 
-        let signUpList = result;
 
         let punchList = [];
         let signUpList = result;
