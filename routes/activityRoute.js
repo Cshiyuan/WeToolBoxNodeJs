@@ -40,9 +40,48 @@ router.use('/insertActivity', function (req, res, next) {
         date: date
     };
 
-    activityDao.insertActivity({activity: activity}).then(result => {
+    Promise.all([activityDao.insertActivity({ activity: activity }), activityDao.signUpActivity({
 
-        res.json({activity: activity, result: result});
+        activity_id: activity_id,
+        open_id: open_id,
+        extra: extra
+    })]).then(results => {
+
+        return getActivitySignUpListPromise = activityDao.getActivitySignUpList(({
+            activity_id: result.activity_id
+        }));
+
+    }).then(result => {
+
+        let signUpList = result;
+
+        let punchList = [];
+        let signUpList = result;
+  
+        activity.punchList = punchList;
+        activity.signUpList = signUpList;
+
+        let isSignUp = false;
+        let isPunch = false;
+
+        punchList.forEach((item) => {
+            if (item.open_id === open_id) {
+                isPunch = true;
+            }
+        });
+
+        signUpList.forEach((item) => {
+            if (item.open_id === open_id) {
+                isSignUp = true;
+            }
+        });
+
+        activity.isSignUp = isSignUp;
+        activity.isPunch = isPunch;
+        let isOwner = activity.open_id === open_id;  //判断是否是创建者
+
+        res.json({ activity: activity, result: result, isOwner: isOwner });
+
     }).catch(err => {
 
         console.log('catch err is ' + err);
@@ -59,7 +98,7 @@ router.use('/getActivity', function (req, res, next) {
     let session = req.session || {};
     let open_id = session.userInfo.openId || '';  //用户的open_id
 
-    activityDao.getActivity({activity_id: activity_id}).then(result => {
+    activityDao.getActivity({ activity_id: activity_id }).then(result => {
 
         let getActivityPunchListPromise = activityDao.getActivityPunchList({
             activity_id: result.activity_id,
@@ -98,7 +137,7 @@ router.use('/getActivity', function (req, res, next) {
         activity.isPunch = isPunch;
         let isOwner = activity.open_id === open_id;  //判断是否是创建者
 
-        res.json({activity: activity, result: result, isOwner: isOwner});
+        res.json({ activity: activity, result: result, isOwner: isOwner });
 
     }).catch(err => {
 
@@ -122,7 +161,7 @@ router.use('/changeActivityType', function (req, res, next) {
     }).then(result => {
 
 
-        res.json({result: result});
+        res.json({ result: result });
 
     }).catch(err => {
 
@@ -210,14 +249,14 @@ router.use('/getUserSignUpActivity', function (req, res, next) {
 router.use('/deleteActivity', function (req, res, next) {
 
     let activity_id = req.body.activity_id || '';
-    let deleteActivityPromise = activityDao.deleteActivity({activity_id: activity_id});
-    let deleteActivitySignUpRelationPromise = activityDao.deleteSignUpRelation(({activity_id: activity_id}));
-    let deleteActivityPunchRelationPromise = activityDao.deletePunchRelation(({activity_id: activity_id}));
+    let deleteActivityPromise = activityDao.deleteActivity({ activity_id: activity_id });
+    let deleteActivitySignUpRelationPromise = activityDao.deleteSignUpRelation(({ activity_id: activity_id }));
+    let deleteActivityPunchRelationPromise = activityDao.deletePunchRelation(({ activity_id: activity_id }));
 
     Promise.all([deleteActivityPromise, deleteActivitySignUpRelationPromise, deleteActivityPunchRelationPromise]).then(result => {
 
         console.log(result);
-        res.json({ret: 1, result: result});
+        res.json({ ret: 1, result: result });
 
     }).catch(err => {
 
@@ -269,12 +308,12 @@ router.use('/punchActivity', function (req, res, next) {
     let activity_id = req.body.activity_id || '';
     let extra = req.body.extra || '';
 
-    activityDao.getActivity({activity_id: activity_id}).then(result => {
+    activityDao.getActivity({ activity_id: activity_id }).then(result => {
 
         let type = result.type;
         if (type === 1) {  //说明创建者禁止了打卡
 
-            res.json({ret: -1, message: '创建者禁止了打卡', data:{}});
+            res.json({ ret: -1, message: '创建者禁止了打卡', data: {} });
             return Promise.resolve();
         } else {
 
@@ -290,7 +329,7 @@ router.use('/punchActivity', function (req, res, next) {
                 });
             }).then(result => {
 
-                res.json({ret: 0, message: 'success', data: result});
+                res.json({ ret: 0, message: 'success', data: result });
             });
         }
 
