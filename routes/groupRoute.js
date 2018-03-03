@@ -14,6 +14,9 @@ router.use('/decryptData', function (req, res, next) {
     let iv = req.body.iv || '';
     let sessionKey = req.session.sessionKey || '';
 
+    console.log('decryptData session is ', req.session);
+    console.log('decryptData body is ', req.body);
+
     var pc = new WXBizDataCrypt(appId, sessionKey)
 
     var data = pc.decryptData(encryptedData, iv)
