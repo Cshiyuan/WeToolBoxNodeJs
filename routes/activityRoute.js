@@ -44,7 +44,7 @@ router.use('/insertActivity', function (req, res, next) {
 
         activity_id: activity_id,
         open_id: open_id,
-        extra: extra
+        extra: ''
     })]).then(results => {
 
         return getActivitySignUpListPromise = activityDao.getActivitySignUpList(({
