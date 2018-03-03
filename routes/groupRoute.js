@@ -8,7 +8,7 @@ let appId = 'wx4097cfe13dfa3a6c';
 /**
  * 解密接口
  */
-router.use('/decryptDate', function (req, res, next) {
+router.use('/decryptData', function (req, res, next) {
 
     let encryptedData = req.body.encryptedData || '';
     let iv = req.body.iv || '';
