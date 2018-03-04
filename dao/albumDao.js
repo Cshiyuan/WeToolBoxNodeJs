@@ -33,7 +33,7 @@ let insertPhotosToDefaultAlbum = function (object) {
             reject('param is err')
         }
         let mysqlResults = {};
-        let album_id = 'AB' + object.object_id.split('AC')[1];
+        let album_id = 'AB' + object;
         let coverUrl = object.photos[0][4];
         console.log('album_id is ' + album_id);
         let album = {
