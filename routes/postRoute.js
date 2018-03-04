@@ -17,7 +17,7 @@ router.use('/insertPost', function (req, res, next) {
     let session = req.session || {};
     let open_id = session.userInfo.openId || '';  //用户的open_id
 
-    let object_id = req.body.object_id || ''; //要插入的activity_id;
+    let object_id = req.body.object_id || ''; //要插入的object_id;
     let post_id = 'PT' + uuidv4();  //逻辑id
     let album_id = 'AB' + object_id;  //得到默认相册的id
     console.log('post_id is ' + post_id);

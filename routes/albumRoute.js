@@ -159,11 +159,11 @@ router.use('/getAlbumPhotos', function (req, res, next) {
  */
 router.use('/getAlbumList', function (req, res, next) {
 
-    let activity_id = req.body.activity_id || '';
+    let object_id = req.body.object_id || '';
     // let results = {};
     albumDao.getAlbumList({
 
-        object_id: activity_id
+        object_id: object_id
     }).then(result => {
 
         res.json(result);
