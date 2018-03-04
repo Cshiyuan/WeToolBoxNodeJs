@@ -17,9 +17,9 @@ router.use('/insertPost', function (req, res, next) {
     let session = req.session || {};
     let open_id = session.userInfo.openId || '';  //用户的open_id
 
-    let activity_id = req.body.activity_id || ''; //要插入的activity_id;
+    let object_id = req.body.object_id || ''; //要插入的activity_id;
     let post_id = 'PT' + uuidv4();  //逻辑id
-    let album_id = 'AB' + activity_id.split('AC')[1];  //得到默认相册的id
+    let album_id = 'AB' + object_id;  //得到默认相册的id
     console.log('post_id is ' + post_id);
 
     let type = req.body.type || 0;  //帖子类型
@@ -48,7 +48,7 @@ router.use('/insertPost', function (req, res, next) {
 
     let post = {
         post_id: post_id,
-        object_id: activity_id,
+        object_id: object_id,
         open_id: open_id,
         type: type,
         title: title,
@@ -62,7 +62,7 @@ router.use('/insertPost', function (req, res, next) {
     promiseArray.push(postDao.insertPost({ post: post }));
     if (photosArray.length > 0) {
         promiseArray.push(albumDao.insertPhotosToDefaultAlbum({
-            object_id: activity_id,
+            object_id: object_id,
             photos: photosArray
         }));
     }
@@ -102,7 +102,7 @@ router.use('/deletePost', function (req, res, next) {
     let session = req.session || {};
     let open_id = session.userInfo.openId || '';  //用户的open_id
 
-    let post_id = req.body.post_id || ''; //要插入的activity_id;
+    let post_id = req.body.post_id || ''; 
 
     postDao.deletePost({
         post_id: post_id
@@ -129,20 +129,20 @@ router.use('/getPostListAndAlbumList', function (req, res, next) {
 
     let start = req.body.start || 0;
     let length = req.body.length || 10;
-    let activity_id = req.body.activity_id || '';  //帖子id
+    let object_id = req.body.object_id || '';  //帖子id
 
 
-    console.log('activity_id is ' + activity_id);
+    console.log('object_id is ' + object_id);
 
     let returnPromiseArray = {};
 
     Promise.all([postDao.getPostList({
-        object_id: activity_id,
+        object_id: object_id,
         start: start,
         length: length
     }), albumDao.getAlbumList({
 
-        object_id: activity_id
+        object_id: object_id
     })]).then(results => {
 
         console.log(results);
@@ -197,15 +197,15 @@ router.use('/getPostList', function (req, res, next) {
 
     let start = req.body.start || 0;
     let length = req.body.length || 10;
-    let activity_id = req.body.activity_id || '';  //帖子id
+    let object_id = req.body.object_id || '';  //帖子id
 
 
-    console.log('activity_id is ' + activity_id);
+    console.log('object_id is ' + object_id);
 
     let returnPromiseArray = [];
 
     postDao.getPostList({
-        object_id: activity_id,
+        object_id: object_id,
         start: start,
         length: length
     }).then(result => {
