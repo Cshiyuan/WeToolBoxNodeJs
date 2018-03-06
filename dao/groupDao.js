@@ -34,7 +34,7 @@ let insetUserGroupRelation = function (object) {
     });
 }
 
-let getUserListByGroup = function (object) {
+let getGroupListByUser = function (object) {
 
     return new Promise(function (resolve, reject) {
 
@@ -60,7 +60,7 @@ let getUserListByGroup = function (object) {
 
 }
 
-let getGroupListByUser = function (object) {
+let getUserListByGroup = function (object) {
 
     return new Promise(function (resolve, reject) {
 
