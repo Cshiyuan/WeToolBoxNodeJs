@@ -45,6 +45,7 @@ router.use('/getGroupListByUser', function (req, res, next) {
 
 
     // let openg_id = data.openGId || '';
+    let session = req.session || {};
     let open_id = session.userInfo.openId || '';  //用户的open_id
 
     groupDao.getGroupListByUser({   //添加用户和群的关系
@@ -65,6 +66,7 @@ router.use('/getUserListByGroup', function (req, res, next) {
 
 
     // let openg_id = data.openGId || '';
+    let session = req.session || {};
     let open_id = session.userInfo.openId || '';  //用户的open_id
     let openg_id = req.body.openg_id || '';
 
@@ -87,6 +89,7 @@ router.use('/deleteUserGroupRelation', function (req, res, next) {
 
 
     // let openg_id = data.openGId || '';
+    let session = req.session || {};
     let open_id = session.userInfo.openId || '';  //用户的open_id
     let openg_id = req.body.openg_id || '';
 
