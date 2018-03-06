@@ -14,7 +14,7 @@ router.use('/decryptData', function (req, res, next) {
     let encryptedData = req.body.encryptedData || '';
     let iv = req.body.iv || '';
     let sessionKey = req.session.sessionKey || '';
-    // let session = req.session || {};
+    let session = req.session || {};
     
 
     console.log('decryptData session is ', req.session);
