@@ -52,7 +52,7 @@ router.use('/getGroupListByUser', function (req, res, next) {
         open_id: open_id
     }).then(result => {
 
-        res.json(data);
+        res.json(result);
     }).catch(err => {
 
         res.json(err);
@@ -74,7 +74,7 @@ router.use('/getUserListByGroup', function (req, res, next) {
         openg_id: openg_id
     }).then(result => {
 
-        res.json(data);
+        res.json(result);
     }).catch(err => {
 
         res.json(err);
@@ -99,7 +99,7 @@ router.use('/deleteUserGroupRelation', function (req, res, next) {
 
     }).then(result => {
 
-        res.json(data);
+        res.json(result);
     }).catch(err => {
 
         res.json(err);

@@ -89,6 +89,7 @@ let getUserListByGroup = function (object) {
 
 
 let deleteUserGroupRelation = function (object) {
+    
     return new Promise(function (resolve, reject) {
 
         if (!object.open_id || !object.openg_id) {
