@@ -71,7 +71,7 @@ router.use('/insertActivity', function (req, res, next) {
             type: 1,   //属于活动的类型
             title: title,
             content: description,
-            images: '',
+            images: JSON.stringify([]),
             star: star || 0,
             extra: extra || '',
         };
