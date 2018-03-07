@@ -69,7 +69,7 @@ router.use('/insertActivity', function (req, res, next) {
             content: description,
             images: '',
             star: star || 0,
-            extra: extra || '',
+            extra: activity_id,
         };
         promiseArray.push(postDao.insertPost({ post: post }));
     }
@@ -99,8 +99,8 @@ router.use('/insertActivity', function (req, res, next) {
 
 
         if (type === 1) {
-            
-            res.json({ post: post, result: result });
+
+            res.json({ post: post, result: results });
         } else {
 
             activityDao.getActivitySignUpList(({
