@@ -145,6 +145,7 @@ router.use('/getPostListAndAlbumList', function (req, res, next) {
         object_id: object_id
     })]).then(results => {
 
+        console.log('after PromisesArray' , results);
         console.log(results);
         let promiseArray = [];
 
