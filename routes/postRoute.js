@@ -102,7 +102,7 @@ router.use('/deletePost', function (req, res, next) {
     let session = req.session || {};
     let open_id = session.userInfo.openId || '';  //用户的open_id
 
-    let post_id = req.body.post_id || ''; 
+    let post_id = req.body.post_id || '';
 
     postDao.deletePost({
         post_id: post_id
@@ -145,7 +145,7 @@ router.use('/getPostListAndAlbumList', function (req, res, next) {
         object_id: object_id
     })]).then(results => {
 
-        console.log('after PromisesArray' , results);
+        console.log('after PromisesArray', results);
         console.log(results);
         let promiseArray = [];
 
@@ -158,11 +158,12 @@ router.use('/getPostListAndAlbumList', function (req, res, next) {
 
         //遍历帖子，设置权限
         results[0].forEach(item => {
-            console.log(item);
+            console.log('遍历帖子', item);
             let isOwner = item.open_id === open_id;
             item.isOwner = isOwner;
-            
+
             item.images = JSON.parse(item.images);
+            console.log('JSON.parese success!');
             promiseArray.push(postDao.checkStarsState({
                 post_id: item.post_id,
                 open_id: open_id
