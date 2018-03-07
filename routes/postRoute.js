@@ -157,8 +157,10 @@ router.use('/getPostListAndAlbumList', function (req, res, next) {
 
         //遍历帖子，设置权限
         results[0].forEach(item => {
+            console.log(item);
             let isOwner = item.open_id === open_id;
             item.isOwner = isOwner;
+            
             item.images = JSON.parse(item.images);
             promiseArray.push(postDao.checkStarsState({
                 post_id: item.post_id,
