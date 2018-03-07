@@ -25,7 +25,6 @@ router.use('/decryptData', function (req, res, next) {
     var data = pc.decryptData(encryptedData, iv)
 
     // console.log('解密后 data: ', data)
-
     let openg_id = data.openGId || '';
     let open_id = session.userInfo.openId || '';  //用户的open_id
     groupDao.insetUserGroupRelation({   //添加用户和群的关系
