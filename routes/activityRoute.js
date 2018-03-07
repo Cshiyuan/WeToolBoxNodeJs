@@ -57,7 +57,8 @@ router.use('/insertActivity', function (req, res, next) {
     }));
 
     extra = JSON.stringify({
-        activity_id: activity_id
+        activity_id: activity_id,
+        position: position
     });
 
     let post;
