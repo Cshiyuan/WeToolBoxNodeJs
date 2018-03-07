@@ -56,6 +56,10 @@ router.use('/insertActivity', function (req, res, next) {
         extra: ''
     }));
 
+    extra = JSON.stringify({
+        activity_id: activity_id
+    });
+
     let post;
     if (type === 1) {  //如果非独立的
 
@@ -69,7 +73,7 @@ router.use('/insertActivity', function (req, res, next) {
             content: description,
             images: '',
             star: star || 0,
-            extra: activity_id,
+            extra: extra || '',
         };
         promiseArray.push(postDao.insertPost({ post: post }));
     }
