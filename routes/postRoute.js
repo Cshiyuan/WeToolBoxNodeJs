@@ -128,7 +128,7 @@ router.use('/getPost', function (req, res, next) {
 
     let post_id = req.body.post_id || '';
 
-    let returnPostObject = {};
+    // let returnPostObject = {};
 
     postDao.getPost({
         post_id: post_id
@@ -142,18 +142,19 @@ router.use('/getPost', function (req, res, next) {
         post.images = JSON.parse(post.images);
         console.log('JSON.parese success!');
 
-        return postDao.checkStarsState({
+        return Promise.all([postDao.checkStarsState({
             post_id: post.post_id,
             open_id: open_id
-        });
+        }), Promise.resolve(post)]);
         // console.log(result)
-        returnPostObject = post;
+        // returnPostObject = post;
         // res.json(result)
-    }).then(result => {
+    }).then(results => {
 
-        returnPostObject.isStar = result[0]['count(1)'] > 0;
+        let post = results[1];
+        post.isStar = results[0][0]['count(1)'] > 0;
 
-        res.json(returnPostObject)
+        res.json(post)
 
     }).catch(error => {
 
