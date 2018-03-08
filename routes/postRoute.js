@@ -128,12 +128,33 @@ router.use('/getPost', function (req, res, next) {
 
     let post_id = req.body.post_id || '';
 
+    let returnPostObject = {};
+
     postDao.getPost({
         post_id: post_id
+    }).then(post => {
+
+        
+
+        console.log('帖子', post);
+        let isOwner = post.open_id === open_id;
+        post.isOwner = isOwner;
+        post.images = JSON.parse(post.images);
+        console.log('JSON.parese success!');
+
+        return postDao.checkStarsState({
+            post_id: post.post_id,
+            open_id: open_id
+        });
+        // console.log(result)
+        returnPostObject = post;
+        // res.json(result)
     }).then(result => {
 
-        res.json(result)
-        console.log(result)
+        returnPostObject.isStar = result[0]['count(1)'] > 0;
+
+        res.json(returnPostObject)
+
     }).catch(error => {
 
         res.json(error)
