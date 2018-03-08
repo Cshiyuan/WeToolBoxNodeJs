@@ -41,7 +41,7 @@ let getPost = function (object) {
 
         pool.getConnection(function (err, connection) {
 
-            connection.query('SELECT * FROM wb_post WHERE post_id = ?',
+            connection.query('SELECT * FROM wb_post INNER JOIN wb_user ON wb_post.open_id = wb_user.open_id AND wb_post.post_id = ?',
                 object.post_id, function (error, results, fields) {
 
                     if (error) {
