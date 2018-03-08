@@ -118,6 +118,30 @@ router.use('/deletePost', function (req, res, next) {
 });
 
 /**
+ * 获得帖子
+ */
+router.use('/getPost', function (req, res, next) {
+
+
+    let session = req.session || {};
+    let open_id = session.userInfo.openId || '';  //用户的open_id
+
+    let post_id = req.body.post_id || '';
+
+    postDao.getPost({
+        post_id: post_id
+    }).then(result => {
+
+        res.json(result)
+        console.log(result)
+    }).catch(error => {
+
+        res.json(error)
+        console.log(error)
+    })
+});
+
+/**
  * 添加拉取
  */
 router.use('/getPostListAndAlbumList', function (req, res, next) {
