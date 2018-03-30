@@ -452,9 +452,17 @@ router.use('/getCommentList', function (req, res, next) {
         length: length
     }).then(results => {
 
+        results.forEach(item => {
+            console.log('遍历帖子', item);
+            let isOwner = item.open_id === open_id;
+            item.isOwner = isOwner;
+
+        })
+
         // let returnResult = {};
         // returnResult.comments = results[0];
         // returnResult.starState = results[1];
+        // isOwner
         res.json(results);
     }).catch(err => {
 
