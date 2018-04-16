@@ -88,7 +88,7 @@ function session(options = {}) {
                     next();
                 }
             } catch (err) {
-                // console.log('catch error!')
+                console.log('catch error!', err)
                 const errObj = {
                     [constants.WX_SESSION_MAGIC_ID]: 1,
                     error: constants.ERR_INVALID_SESSION,
